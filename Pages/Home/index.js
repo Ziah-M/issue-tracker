@@ -8,8 +8,13 @@ const Home = (props) => {
 
   const handleClick = () => {
     firebase.createTicket({
-      test: "test",
-      time: new Date().toString(),
+      title: "Add more features",
+      projectName: "Issue Tracker",
+      assignedDev: "Ziah",
+      priority: "High",
+      status: "Open",
+      type: "Bugs / Errors",
+      created: new Date().toUTCString(),
     });
   };
 

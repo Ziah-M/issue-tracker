@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 60px;
   transform: translateY(-20px) scaleX(0.95);
+  border-radius:5px;
 `;
 
 const Title = styled.div`
