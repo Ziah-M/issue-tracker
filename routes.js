@@ -10,3 +10,5 @@ export const MY_TICKETS = "/issuetracker/my-tickets";
 export const TICKET = "/issuetracker/ticket/:id";
 export const USER_PROFILE = "/issuetracker/user-profile";
 export const HOME = "/issuetracker/home";
+
+export const LINK_TICKET = (id) => `/issuetracker/ticket/${id}`;

@@ -7,6 +7,7 @@ const ContentArea = ({ children }) => {
 
 const Wrapper = styled.div`
   width: 100%;
+  max-width: 100%;
   height: auto;
   min-height: 100vh;
   background: lightgrey;

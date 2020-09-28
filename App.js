@@ -20,12 +20,14 @@ const Wrapper = styled.div`
   min-height: 100vh;
   width: 100%;
 
-  display:flex;
+  display: flex;
 `;
 
 const Inner = styled.div`
-display:flex;
-flex-direction:column;
+  display: flex;
+  width: 100%;
+  max-width:100%;
+  flex-direction: column;
 `;
 
 export default withAuthentication(App);

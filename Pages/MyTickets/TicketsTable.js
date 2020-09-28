@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { TitleBanner } from "../../Components";
 import { useTickets } from "../../Hooks";
 import { convertObjectToList } from "../../Helpers";
+import { NavLink as Link } from "react-bootstrap";
+import * as ROUTES from "../../routes";
 
 const TicketsTable = () => {
   const tickets = useTickets();
@@ -41,9 +43,10 @@ const TicketsTable = () => {
                 <td>{ticket.type}</td>
                 <td>{ticket.created}</td>
                 <td>
-                  Edit/Assign
-                  <br />
-                  Details
+                  <Link href={ROUTES.LINK_TICKET(ticket.uid)}>
+                    Edit / Assign
+                  </Link>
+                  <Link href={ROUTES.LINK_TICKET(ticket.uid)}>Details</Link>
                 </td>
               </tr>
             ))}
@@ -56,6 +59,7 @@ const TicketsTable = () => {
 const Wrapper = styled.div`
   background: blue;
   width: 100%;
+  max-width:100%;
   height: auto;
   border-radius: 5px;
 `;
@@ -63,6 +67,8 @@ const Wrapper = styled.div`
 const Table = styled(UnstyledTable)`
   background: white;
   color: black;
+  width:100%;
+  max-width:100%;
 `;
 
 export default TicketsTable;
