@@ -12,10 +12,10 @@ import AuthUserContext from "./context";
 
 const withAuthorization = (condition) => (Component) => {
   const WithAuthorization = (props) => {
-    const [listener, setListener] = useState(null);
     const history = useHistory();
 
     // If firebase auth changes, check condition again to force re-direct
+
     useEffect(() => {
       const next = (mergedAuthUser) => {
         if (!condition(mergedAuthUser)) {
@@ -26,11 +26,7 @@ const withAuthorization = (condition) => (Component) => {
       // Fallback is called if authUser is null
       const fallback = () => history.push(ROUTES.SIGN_IN);
 
-      setListener(props.firebase.onAuthUserListener(next, fallback));
-
-      return () => {
-        listener();
-      };
+      props.firebase.onAuthUserListener(next, fallback);
     }, []);
 
     return (

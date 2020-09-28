@@ -78,8 +78,33 @@ class Firebase {
     this.auth.currentUser.updatePassword(password);
 
   // *** --- USERS IN REALTIME DATABASE --- ***
-  user = (uid) => this.db.ref(`users/${uid}`); // get one user by UID
+  user = (uid) => this.db.ref(`users/${uid}`);
   users = () => this.db.ref("users");
-}
 
+  /* ------------------------------------------------------------------ */
+  /* --------------------------- API ENDPOINTS ------------------------- */
+  /* ------------------------------------------------------------------ */
+
+  // *** --- TICKETS --- ***
+  tickets = () => this.db.ref("tickets");
+  ticket = (id) => this.db.ref(`tickets/${id}`);
+
+  // *** --- PROJECTS --- ***
+  projects = () => this.db.ref("projects");
+  project = (id) => this.db.ref(`projects/${id}`);
+
+  /* ------------------------------------------------------------------ */
+  /* --------------------------- CRUD OPERATIONS ------------------------- */
+  /* ------------------------------------------------------------------ */
+
+  getTicket = (id) => this.ticket(id).once((ticket) => ticket);
+  createTicket = (ticket) => this.tickets().push(ticket);
+  deleteTicket = (id) => this.ticket(id).remove();
+  updateTicket = (id, ticket) => this.ticket(id).update({ ...ticket });
+
+  getProject = (id) => this.project(id).once((project) => project);
+  createProject = (project) => this.projects().push(project);
+  updateProject = (id, project) => this.project(id).update({ ...project });
+  deleteProject = (id) => this.project(id).remove();
+}
 export default Firebase;

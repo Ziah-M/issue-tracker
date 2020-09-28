@@ -1,27 +1,18 @@
-import AuthUserContext from "./context";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withFirebase } from "../Firebase";
+import AuthUserContext from "./context";
 
 const withAuthentication = (Component) => {
   const WithAuthentication = (props) => {
-    const [listener, setListener] = useState(null);
     const [authUser, setAuthUser] = useState(null);
 
     useEffect(() => {
       //   Prevents UI flicker by setting from local storage while awaiting ASYNC
       setAuthUser(JSON.parse(localStorage.getItem("authUser")));
-
-      const next = (mergedAuthUser) => {
-        setAuthUser(mergedAuthUser);
-      };
-
-      const fallback = () => setAuthUser(null);
-
-      setListener(props.firebase.onAuthUserListener(next, fallback));
-
-      return () => {
-        listener();
-      };
+      props.firebase.onAuthUserListener(
+        (user) => setAuthUser(user),
+        setAuthUser(null)
+      );
     }, []);
 
     useEffect(() => {
@@ -38,6 +29,8 @@ const withAuthentication = (Component) => {
         localStorage.setItem("authUser", authUserStringified);
       }
     }, [authUser]);
+
+    useEffect(() => console.log(authUser), [authUser]);
 
     return (
       <AuthUserContext.Provider value={authUser}>
