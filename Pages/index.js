@@ -1,4 +1,4 @@
-import Login from "./Login";
+import {SignIn, SignUp} from "./Account";
 import Landing from "./Landing";
 import ManageRoles from "./ManageRoles";
 import ManageUsers from "./ManageUsers";
@@ -8,7 +8,8 @@ import UserProfile from "./UserProfile";
 import Home from "./Home";
 
 export {
-  Login,
+  SignIn,
+  SignUp,
   Landing,
   ManageRoles,
   ManageUsers,

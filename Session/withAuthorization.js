@@ -19,12 +19,12 @@ const withAuthorization = (condition) => (Component) => {
     useEffect(() => {
       const next = (mergedAuthUser) => {
         if (!condition(mergedAuthUser)) {
-          history.push(ROUTES.LOGIN);
+          history.push(ROUTES.SIGN_IN);
         }
       };
 
       // Fallback is called if authUser is null
-      const fallback = () => history.push(ROUTES.LOGIN);
+      const fallback = () => history.push(ROUTES.SIGN_IN);
 
       setListener(props.firebase.onAuthUserListener(next, fallback));
 

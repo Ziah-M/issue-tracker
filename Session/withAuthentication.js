@@ -1,4 +1,4 @@
-import { AuthUserContext } from "./context";
+import AuthUserContext from "./context";
 import React, { useState, useEffect } from "react";
 import { withFirebase } from "../Firebase";
 

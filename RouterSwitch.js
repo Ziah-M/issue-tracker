@@ -6,15 +6,14 @@ import * as R from "./routes.js";
 const RouterSwitch = ({ location }) => {
   return (
     <Switch location={location}>
-      <Route path={R.USER_PROFILE} component={P.Login} />
-      <Route path={R.MY_TICKETS} component={P.Login} />
-      <Route path={R.MY_PROJECTS} component={P.Login} />
-      <Route path={R.MANAGE_USERS} component={P.Login} />
-      <Route path={R.MANAGE_ROLES} component={P.Login} />
-      <Route path={R.HOME} component={P.Login} />
-      <Route path={R.LOGIN} component={P.Login} />
+      <Route path={R.USER_PROFILE} component={P.UserProfile} />
+      <Route path={R.MY_TICKETS} component={P.MyTickets} />
+      <Route path={R.MY_PROJECTS} component={P.MyProjects} />
+      <Route path={R.MANAGE_USERS} component={P.ManageUsers} />
+      <Route path={R.MANAGE_ROLES} component={P.ManageRoles} />
+      <Route path={R.SIGN_IN} component={P.SignIn} />
+      <Route path={R.SIGN_UP} component={P.SignUp} />
       <Route path={R.LANDING} component={P.Landing} />
-
     </Switch>
   );
 };
