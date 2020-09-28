@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useContext } from "react";
+import { FirebaseContext } from "../../Firebase";
+import { useTickets } from "../../Hooks";
 
-const Home = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+const Home = (props) => {
+  const firebase = useContext(FirebaseContext);
+  const tickets = useTickets();
 
-export default Home
+  const handleClick = () => {
+    firebase.createTicket({
+      test: "test",
+      time: new Date().toString(),
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Create Test Ticket</button>
+      <br />
+      {tickets && JSON.stringify(tickets)}
+    </div>
+  );
+};
+
+export default Home;

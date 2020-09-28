@@ -97,12 +97,34 @@ class Firebase {
   /* --------------------------- CRUD OPERATIONS ------------------------- */
   /* ------------------------------------------------------------------ */
 
-  getTicket = (id) => this.ticket(id).once((ticket) => ticket);
+  getTickets = () =>
+    this.tickets()
+      .once("value")
+      .then((snapshot) => {
+        return snapshot.val();
+      });
+  getTicket = (id) =>
+    this.ticket(id)
+      .once("value")
+      .then((snapshot) => {
+        return snapshot.val();
+      });
   createTicket = (ticket) => this.tickets().push(ticket);
   deleteTicket = (id) => this.ticket(id).remove();
   updateTicket = (id, ticket) => this.ticket(id).update({ ...ticket });
 
-  getProject = (id) => this.project(id).once((project) => project);
+  getProjects = () =>
+    this.projects()
+      .once("value")
+      .then((snapshot) => {
+        return snapshot.val();
+      });
+  getProject = (id) =>
+    this.project(id)
+      .once("value")
+      .then((snapshot) => {
+        return snapshot.val();
+      });
   createProject = (project) => this.projects().push(project);
   updateProject = (id, project) => this.project(id).update({ ...project });
   deleteProject = (id) => this.project(id).remove();
