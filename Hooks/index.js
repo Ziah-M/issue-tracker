@@ -1,4 +1,5 @@
-import useTickets from './useTickets'
-import useProjects from './useProjects'
+import useTickets from "./useTickets";
+import useProjects from "./useProjects";
+import useTicket from "./useTicket";
 
-export {useTickets, useProjects}
+export { useTickets, useProjects, useTicket };

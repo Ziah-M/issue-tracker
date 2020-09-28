@@ -8,6 +8,7 @@ const RouterSwitch = ({ location }) => {
     <Switch location={location}>
       <Route path={R.USER_PROFILE} component={P.UserProfile} />
       <Route path={R.MY_TICKETS} component={P.MyTickets} />
+      <Route path={R.TICKET} component={P.Ticket} />
       <Route path={R.MY_PROJECTS} component={P.MyProjects} />
       <Route path={R.MANAGE_USERS} component={P.ManageUsers} />
       <Route path={R.MANAGE_ROLES} component={P.ManageRoles} />
