@@ -40,7 +40,7 @@ const withAuthentication = (Component) => {
     }, [authUser]);
 
     return (
-      <AuthUserContext.Provider>
+      <AuthUserContext.Provider value={authUser}>
         <Component {...props} authUser={authUser} />
       </AuthUserContext.Provider>
     );
