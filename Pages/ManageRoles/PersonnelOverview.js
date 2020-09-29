@@ -1,11 +1,22 @@
-import React from 'react'
+import React from "react";
+import { Card } from "../../Components";
+import styled from "styled-components";
+import { CardTable } from "../../Components";
 
-const PersonnelOverview = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+const PersonnelOverview = ({ users = [] }) => {
+  const headings = ["User", "Email", "Role"];
 
-export default PersonnelOverview
+  const sortedUsers = users.map((user) => {
+    const { name, email, role, uid } = user;
+
+    return [name, email, role];
+  });
+
+  return (
+    <Card title="Your Personnel" description="All the users in your database">
+      <CardTable headings={headings} rows={sortedUsers || [[]]} />
+    </Card>
+  );
+};
+
+export default PersonnelOverview;
