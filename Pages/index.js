@@ -7,6 +7,7 @@ import MyTickets from "./MyTickets";
 import UserProfile from "./UserProfile";
 import Home from "./Home";
 import Ticket from "./Ticket";
+import Project from "./Project";
 
 export {
   SignIn,
@@ -19,4 +20,5 @@ export {
   UserProfile,
   Home,
   Ticket,
+  Project,
 };

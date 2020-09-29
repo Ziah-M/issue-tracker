@@ -7,10 +7,11 @@ const Home = (props) => {
   const tickets = useTickets();
 
   const handleClick = () => {
-    firebase.createTicket({
+    firebase.createProject({
       title: "Add more features",
-      projectName: "Issue Tracker",
-      assignedDev: "Ziah",
+      projectName: "Portfolio",
+      description: "this is test project 2",
+      assignedDev: "Citizen",
       priority: "High",
       status: "Open",
       type: "Bugs / Errors",

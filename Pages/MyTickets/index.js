@@ -58,7 +58,6 @@ const MyTickets = () => {
           rows={sortedTickets || [[]]}
         />
       </Card>
-      {/* <TicketsTable /> */}
     </ContentArea>
   );
 };
