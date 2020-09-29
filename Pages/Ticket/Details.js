@@ -18,7 +18,7 @@ const Details = ({
     <Card title={`Details`} description="All Tickets | Edit Tickets">
       <Row>
         <Col>
-          <Detail title="Assigned Developer" info={assignedDev}></Detail>
+          <Detail title="Assigned To" info={assignedDev}></Detail>
         </Col>
         <Col>
           <Detail title="Submitter" info={submitter}></Detail>
