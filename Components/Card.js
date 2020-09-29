@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   background: white;
   width: 100%;
   height: 100%;
+  user-select:none;
 `;
 
 export default Card;

@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   height: 60px;
   transform: translateY(-20px) scaleX(0.95);
   border-radius:5px;
+  user-select:none;
 `;
 
 const Title = styled.div`

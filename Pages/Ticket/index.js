@@ -29,7 +29,9 @@ const Ticket = () => {
           <Section>
             <Attachment ticket={ticket} />
           </Section>
-          <Edit ticket={ticket} />
+          <Modal>
+            <Edit ticket={ticket} />
+          </Modal>
         </Wrapper>
       )}
     </ContentArea>
@@ -42,6 +44,10 @@ const Section = styled.div`
   margin-bottom: 50px;
   height: auto;
   min-height: 50px;
+`;
+
+const Modal = styled.div`
+  /* DISPLAY IF ROUTE HAS /edit */
 `;
 
 const Wrapper = styled.div`
