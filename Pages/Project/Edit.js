@@ -1,6 +1,8 @@
 import React from 'react'
 
-const Overview = () => {
+// same as ticket edit form
+
+const Edit = () => {
     return (
         <div>
             
@@ -8,4 +10,4 @@ const Overview = () => {
     )
 }
 
-export default Overview
+export default Edit

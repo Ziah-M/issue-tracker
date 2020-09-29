@@ -3,6 +3,8 @@ import { Card, CardTable, ContentArea } from "../../Components";
 import { convertObjectToList } from "../../Helpers";
 import { useProjects } from "../../Hooks";
 import * as ROUTES from "../../routes";
+import { Button as UnstyledButton } from "react-bootstrap";
+import styled from "styled-components";
 
 const MyProjects = () => {
   const projects = useProjects();
@@ -29,6 +31,7 @@ const MyProjects = () => {
 
   return (
     <ContentArea>
+      <Button>CREATE NEW PROJECT</Button>
       <Card
         title="Your Projects"
         description="Table of all outstanding projects"
@@ -41,5 +44,9 @@ const MyProjects = () => {
     </ContentArea>
   );
 };
+
+const Button = styled(UnstyledButton)`
+  margin-bottom: 50px;
+`;
 
 export default MyProjects;
