@@ -1,6 +1,7 @@
 import React from "react";
 import { Table as UnstyledTable } from "react-bootstrap";
 import styled from "styled-components";
+import { NavLink as Link } from "react-bootstrap";
 
 const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
   return (
@@ -17,9 +18,20 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
         <Body>
           {rows.map((row, index) => (
             <tr key={`table-row-${index}`}>
-              {row.map((item, index) => (
-                <td key={`table-row-item-${index}`}>{item}</td>
-              ))}
+              {row.map((item, index) =>
+                typeof item === "string" ? (
+                  <td key={`table-row-item-${index}`}>{item}</td>
+                ) : (
+                  <td key={`table-row-item-${index}`}>
+                    {item.link1 && (
+                      <Link href={item.link1.to}>{item.link1.name}</Link>
+                    )}
+                    {item.link2 && (
+                      <Link href={item.link2.to}>{item.link2.name}</Link>
+                    )}
+                  </td>
+                )
+              )}
             </tr>
           ))}
         </Body>
