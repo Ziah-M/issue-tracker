@@ -4,7 +4,12 @@ import styled from "styled-components";
 import { CardTable } from "../../Components";
 import { Button } from "react-bootstrap";
 
-const UsersTable = ({ users }) => {
+const UsersTable = ({
+  users,
+  add = (f) => f,
+  remove = (f) => f,
+  projectId,
+}) => {
   const headings = ["User", "Role", " "];
   console.log(users);
   const rows = users
@@ -12,11 +17,19 @@ const UsersTable = ({ users }) => {
         user.name,
         user.role,
         user.isAssignedToProject ? (
-          <Button variant="remove" size="sm">
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => remove(user.uid, projectId)}
+          >
             Remove
           </Button>
         ) : (
-          <Button variant="success" size="sm">
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => add(user.uid, projectId)}
+          >
             Add
           </Button>
         ),
