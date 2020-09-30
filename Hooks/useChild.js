@@ -11,7 +11,8 @@ const useList = (path = "", id = "") => {
 
   useEffect(() => {
     firebase.ref(fullPath).on("value", (snapshot) => {
-      setData(snapshot.val());
+      const newData = { ...snapshot.val(), uid: snapshot.key };
+      setData(newData);
     });
 
     return () => firebase.ref(fullPath).off();

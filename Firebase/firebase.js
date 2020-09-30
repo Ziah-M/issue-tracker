@@ -88,15 +88,7 @@ class Firebase {
   // e.g. id = 1, path = `tickets/${id}`
   ref = (path) => this.db.ref(`${path}`);
 
-  // *** --- TICKETS --- ***
-  tickets = () => this.db.ref("tickets");
-  ticket = (id) => this.db.ref(`tickets/${id}`);
 
-  // *** --- PROJECTS --- ***
-  projects = () => this.db.ref("projects");
-  project = (id) => this.db.ref(`projects/${id}`);
-  projectAssignedPersonnel = (id) => this.db.ref(`projects/${id}/personnel`);
-  projectAssignedTickets = (id) => this.db.ref(`projects/${id}/tickets`);
   /* ------------------------------------------------------------------ */
   /* --------------------------- CRUD OPERATIONS ------------------------- */
   /* ------------------------------------------------------------------ */
