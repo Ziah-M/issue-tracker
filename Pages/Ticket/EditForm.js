@@ -105,17 +105,7 @@ const EditForm = ({ ticket }) => {
   );
 };
 
-const Form = styled(UnstyledForm)``;
-
-const Group = styled(Form.Group)`
-  width: 45%;
-  margin: 1%;
-  display: inline-block;
-`;
-
-const Label = styled(Form.Label)``;
-
-const Control = styled(Form.Control)``;
+const Label = styled(UnstyledForm.Label)``;
 
 const Button = styled(UnstyledButton)``;
 
