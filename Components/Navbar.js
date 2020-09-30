@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { Nav, ListGroup, FormControl as Control } from "react-bootstrap";
+import {
+  Nav,
+  ListGroup,
+  FormControl as Control,
+  Button,
+} from "react-bootstrap";
 import * as ROUTES from "../routes";
 
-const Navbar = () => {
+const Navbar = ({ setShowAddTicket }) => {
   return (
     <Wrapper>
       <List>
@@ -17,7 +22,9 @@ const Navbar = () => {
           <Link href={ROUTES.MANAGE_USERS}>Home</Link>
         </Li>
         <Li>
-          <Link href={ROUTES.MY_PROJECTS}>Notifications</Link>
+          <Button variant="success" onClick={() => setShowAddTicket(true)}>
+            Create Ticket
+          </Button>
         </Li>
         <Li>
           <Link href={ROUTES.MY_TICKETS}>User</Link>

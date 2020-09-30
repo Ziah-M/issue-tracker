@@ -12,12 +12,7 @@ import Card from "./Card";
 import { PATHS } from "../Firebase";
 import { useChildren, usePush } from "../Hooks";
 
-const AddTicketModal = (props) => {
-  const [show, setShow] = useState(true);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+const AddTicketModal = ({ handleShow, handleClose, show }) => {
   return (
     <Modal
       show={show}
@@ -131,9 +126,7 @@ const EditForm = ({ handleClose = (f) => f }) => {
                 <Form.Label>Assigned To Developer</Form.Label>
                 <Form.Control {...props} as="select" id="assignedTo">
                   {users.map((user) => (
-                    <option value={user.name}>
-                      {user.name}
-                    </option>
+                    <option value={user.name}>{user.name}</option>
                   ))}
                 </Form.Control>
               </Group>
