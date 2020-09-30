@@ -23,12 +23,7 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
                   <td key={`table-row-item-${index}`}>{item}</td>
                 ) : (
                   <td key={`table-row-item-${index}`}>
-                    {!!item.link1 && (
-                      <Link href={item.link1.to}>{item.link1.name}</Link>
-                    )}
-                    {!!item.link2 && (
-                      <Link href={item.link2.to}>{item.link2.name}</Link>
-                    )}
+                    {item}
                   </td>
                 )
               )}

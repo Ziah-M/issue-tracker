@@ -2,6 +2,8 @@ import React from "react";
 import { Card, CardTable, ContentArea } from "../../Components";
 import { useChildren } from "../../Hooks";
 import * as ROUTES from "../../routes";
+import { NavLink as Link } from "react-bootstrap";
+import styled from 'styled-components'
 
 const MyTickets = () => {
   const { data: tickets } = useChildren("tickets");
@@ -26,38 +28,43 @@ const MyTickets = () => {
       status,
       type,
       created,
-      {
-        link1: {
-          to: ROUTES.LINK_TICKET(uid),
-          name: "Manage Users",
-        },
-        link2: {
-          to: ROUTES.LINK_TICKET(uid),
-          name: "Details",
-        },
-      },
+      <>
+        <Link href={`${ROUTES.LINK_TICKET(uid)}`}>Manage Users</Link>
+        <Link href={`${ROUTES.LINK_TICKET(uid)}`}>Details</Link>
+      </>,
     ];
   });
 
   return (
     <ContentArea>
-      <Card title="Your Tickets" description="Table of all outstanding tickets">
-        <CardTable
-          headings={[
-            "Title",
-            "Project Name",
-            "Assigned To",
-            "priority",
-            "status",
-            "type",
-            "created",
-            " ",
-          ]}
-          rows={sortedTickets || [[]]}
-        />
-      </Card>
+      <Wrapper>
+        <Card
+          title="Your Tickets"
+          description="Table of all outstanding tickets"
+        >
+          <CardTable
+            headings={[
+              "Title",
+              "Project Name",
+              "Assigned To",
+              "priority",
+              "status",
+              "type",
+              "created",
+              " ",
+            ]}
+            rows={sortedTickets || [[]]}
+          />
+        </Card>
+      </Wrapper>
     </ContentArea>
   );
 };
+
+const Wrapper = styled.div`
+  height: auto;
+  width: 100%;
+  margin-bottom: 80px;
+`;
 
 export default MyTickets;

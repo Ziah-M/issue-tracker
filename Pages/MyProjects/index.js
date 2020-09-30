@@ -1,5 +1,5 @@
 import React from "react";
-import { Button as UnstyledButton } from "react-bootstrap";
+import { Button as UnstyledButton, NavLink as Link } from "react-bootstrap";
 import styled from "styled-components";
 import { Card, CardTable, ContentArea } from "../../Components";
 import { useChildren } from "../../Hooks";
@@ -14,37 +14,39 @@ const MyProjects = () => {
     return [
       title,
       description,
-      {
-        link1: {
-          to: ROUTES.LINK_PROJECT(uid),
-          name: "Manage Users",
-        },
-        link2: {
-          to: ROUTES.LINK_PROJECT(uid),
-          name: "Details",
-        },
-      },
+      <>
+        <Link href={`${ROUTES.LINK_PROJECT(uid)}`}>Manage Users</Link>
+        <Link href={`${ROUTES.LINK_PROJECT(uid)}`}>Details</Link>
+      </>,
     ];
   });
 
   return (
     <ContentArea>
       <Button>CREATE NEW PROJECT</Button>
-      <Card
-        title="Your Projects"
-        description="Table of all outstanding projects"
-      >
-        <CardTable
-          headings={["Project Name", "Description", " "]}
-          rows={sortedProjects || [[]]}
-        />
-      </Card>
+      <Wrapper>
+        <Card
+          title="Your Projects"
+          description="Table of all outstanding projects"
+        >
+          <CardTable
+            headings={["Project Name", "Description", " "]}
+            rows={sortedProjects || [[]]}
+          />
+        </Card>
+      </Wrapper>
     </ContentArea>
   );
 };
 
 const Button = styled(UnstyledButton)`
   margin-bottom: 50px;
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  width: 100%;
+  margin-bottom: 80px;
 `;
 
 export default MyProjects;

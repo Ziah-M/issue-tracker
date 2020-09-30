@@ -6,7 +6,7 @@ import { convertObjectToList } from "../../Helpers";
 import UsersTable from "./UsersTable";
 import styled from "styled-components";
 
-const ManageUsers = ({}) => {
+const ManageUsers = (props) => {
   const { data: projects } = useChildren("projects");
   const { data: users } = useChildren("users");
 

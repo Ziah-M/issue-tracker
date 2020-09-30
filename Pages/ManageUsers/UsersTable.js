@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "../../Components";
 import styled from "styled-components";
 import { CardTable } from "../../Components";
+import { Button } from "react-bootstrap";
 
 const UsersTable = ({ users }) => {
   const headings = ["User", "Role", " "];
@@ -10,7 +11,15 @@ const UsersTable = ({ users }) => {
     ? users.map((user) => [
         user.name,
         user.role,
-        user.isAssignedToProject ? "Success" : "Danger",
+        user.isAssignedToProject ? (
+          <Button variant="remove" size="sm">
+            Remove
+          </Button>
+        ) : (
+          <Button variant="success" size="sm">
+            Add
+          </Button>
+        ),
       ])
     : [[]];
 
