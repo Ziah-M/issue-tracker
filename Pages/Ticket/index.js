@@ -1,9 +1,8 @@
-import React from "react";
-import { ContentArea, Card } from "../../Components";
+import React, { useState } from "react";
+import { ContentArea, Card, AddTicketModal } from "../../Components";
 import Attachment from "./Attachment";
 import Comments from "./Comments";
 import Details from "./Details";
-import Edit from "./Edit";
 import History from "./History";
 import { useTicket, useChild } from "../../Hooks";
 import { useParams } from "react-router";
@@ -13,11 +12,15 @@ const Ticket = () => {
   const { id } = useParams();
   const ticket = useChild("tickets", id);
 
+  const [showAddTicket, setShowAddTicket] = useState(false);
+  const handleCloseAddTicket = () => setShowAddTicket(false);
+  const handleShowAddTicket = () => setShowAddTicket(true);
+
   return (
     <ContentArea>
       {ticket && (
         <Wrapper>
-          <Section>
+          <Section onClick={() => handleShowAddTicket()}>
             <Details ticket={ticket} />
           </Section>
           <Section>
@@ -30,7 +33,13 @@ const Ticket = () => {
             <Attachment ticket={ticket} />
           </Section>
           <Modal>
-            <Edit ticket={ticket} />
+            <AddTicketModal
+              show={showAddTicket}
+              handleShow={handleShowAddTicket}
+              handleClose={handleCloseAddTicket}
+              prefillData={ticket}
+              isEdit
+            />
           </Modal>
         </Wrapper>
       )}

@@ -10,9 +10,15 @@ import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components";
 import Card from "./Card";
 import { PATHS } from "../Firebase";
-import { useChildren, usePush } from "../Hooks";
+import { useChildren, usePush, useUpdate } from "../Hooks";
 
-const AddTicketModal = ({ handleShow, handleClose, show }) => {
+const AddTicketModal = ({
+  handleShow,
+  handleClose,
+  show,
+  isEdit,
+  prefillData,
+}) => {
   return (
     <Modal
       show={show}
@@ -21,10 +27,14 @@ const AddTicketModal = ({ handleShow, handleClose, show }) => {
       style={{ height: "auto", maxWidth: "90vw" }}
     >
       <Header closeButton>
-        <Title>Add Ticket</Title>
+        <Title>{isEdit ? "Edit Ticket" : "Add Ticket"}</Title>
       </Header>
       <Modal.Body>
-        <EditForm handleClose={handleClose} />
+        <EditForm
+          handleClose={handleClose}
+          isEdit={isEdit}
+          prefillData={prefillData}
+        />
       </Modal.Body>
     </Modal>
   );
@@ -39,15 +49,33 @@ const Title = styled(Modal.Title)`
   user-select: none;
 `;
 
-const EditForm = ({ handleClose = (f) => f }) => {
+const EditForm = ({
+  handleClose = (f) => f,
+  isEdit = false,
+  prefillData = {
+    title: "",
+    description: "",
+    projectName: "",
+    assignedTo: "",
+    priority: "",
+    status: "",
+    type: "",
+  },
+}) => {
   const { register, control, handleSubmit, errors } = useForm();
-  const add = usePush();
+  const update = useUpdate();
+  const push = usePush();
+
+  const addToDB = {
+    setter: isEdit ? update : push,
+    path: isEdit ? PATHS.TICKET(prefillData.uid) : PATHS.TICKETS(),
+  };
 
   const { data: projects = [] } = useChildren("projects");
   const { data: users = [] } = useChildren("users");
 
   const onSubmit = (data) => {
-    add(PATHS.TICKETS(), data);
+    addToDB.setter(addToDB.path, data);
     handleClose();
   };
 
@@ -66,7 +94,12 @@ const EditForm = ({ handleClose = (f) => f }) => {
             render={(props) => (
               <Group>
                 <Form.Label>Title</Form.Label>
-                <Form.Control {...props} id="title" type="text" />
+                <Form.Control
+                  {...props}
+                  id="title"
+                  type="text"
+                  placeholder={prefillData.title}
+                />
               </Group>
             )}
           />
@@ -84,7 +117,12 @@ const EditForm = ({ handleClose = (f) => f }) => {
             render={(props) => (
               <Group>
                 <Form.Label>Description</Form.Label>
-                <Form.Control {...props} id="description" type="text" />
+                <Form.Control
+                  {...props}
+                  id="description"
+                  type="text"
+                  placeholder={prefillData.description}
+                />
               </Group>
             )}
           />
@@ -96,14 +134,19 @@ const EditForm = ({ handleClose = (f) => f }) => {
             name="projectName"
             rules={{
               required: true,
+              minLength: 4,
             }}
             type="text"
             render={(props) => (
               <Group>
                 <Form.Label>Assigned To Project</Form.Label>
                 <Form.Control {...props} as="select" id="projectName">
+                  <option value=""></option>
                   {projects.map((project) => (
-                    <option value={project.projectName}>
+                    <option
+                      value={project.projectName}
+                      selected={prefillData.projectName === project.projectName}
+                    >
                       {project.projectName}
                     </option>
                   ))}
@@ -119,14 +162,21 @@ const EditForm = ({ handleClose = (f) => f }) => {
             name="assignedTo"
             rules={{
               required: true,
+              minLength: 4,
             }}
             type="text"
             render={(props) => (
               <Group>
                 <Form.Label>Assigned To Developer</Form.Label>
                 <Form.Control {...props} as="select" id="assignedTo">
+                  <option value=""></option>
                   {users.map((user) => (
-                    <option value={user.name}>{user.name}</option>
+                    <option
+                      value={user.name}
+                      selected={prefillData.assignedTo === user.name}
+                    >
+                      {user.name}
+                    </option>
                   ))}
                 </Form.Control>
               </Group>
@@ -140,6 +190,7 @@ const EditForm = ({ handleClose = (f) => f }) => {
             name="priority"
             rules={{
               required: true,
+              minLength: 4,
             }}
             type="text"
             render={(props) => (
@@ -147,10 +198,27 @@ const EditForm = ({ handleClose = (f) => f }) => {
                 <Form.Label htmlFor="priority">Priority</Form.Label>
                 <Form.Control {...props} as="select" id="priority">
                   <option value=""></option>
-                  <option value="None">None</option>
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
+                  <option
+                    value="None"
+                    selected={prefillData.priority === "None"}
+                  >
+                    None
+                  </option>
+                  <option value="Low" selected={prefillData.priority === "Low"}>
+                    Low
+                  </option>
+                  <option
+                    value="Medium"
+                    selected={prefillData.priority === "Medium"}
+                  >
+                    Medium
+                  </option>
+                  <option
+                    value="High"
+                    selected={prefillData.priority === "High"}
+                  >
+                    High
+                  </option>
                 </Form.Control>
               </Group>
             )}
@@ -163,6 +231,7 @@ const EditForm = ({ handleClose = (f) => f }) => {
             name="status"
             rules={{
               required: true,
+              minLength: 4,
             }}
             type="text"
             render={(props) => (
@@ -170,10 +239,25 @@ const EditForm = ({ handleClose = (f) => f }) => {
                 <Form.Label>Status</Form.Label>
                 <Form.Control {...props} as="select" id="status">
                   <option value=""></option>
-                  <option value="Open">Open</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Closed">Closed</option>
-                  <option value="Additional Info Required">
+                  <option value="Open" selected={prefillData.status === "Open"}>
+                    Open
+                  </option>
+                  <option
+                    value="In Progress"
+                    selected={prefillData.status === "In Progress"}
+                  >
+                    In Progress
+                  </option>
+                  <option
+                    value="Closed"
+                    selected={prefillData.status === "Closed"}
+                  >
+                    Closed
+                  </option>
+                  <option
+                    value="Additional Info Required"
+                    selected={prefillData.status === "Additional Info Required"}
+                  >
                     Additional Info Required
                   </option>
                 </Form.Control>
@@ -188,6 +272,7 @@ const EditForm = ({ handleClose = (f) => f }) => {
             name="type"
             rules={{
               required: true,
+              minLength: 4,
             }}
             type="text"
             render={(props) => (
@@ -195,12 +280,32 @@ const EditForm = ({ handleClose = (f) => f }) => {
                 <Form.Label>Type</Form.Label>
                 <Form.Control {...props} as="select" id="type">
                   <option value=""></option>
-                  <option value="Feature Requests">Feature Requests</option>
-                  <option value="Bugs / Errors">Bugs / Errors</option>
-                  <option value="Training / Document Requests">
+                  <option
+                    value="Feature Requests"
+                    selected={prefillData.type === "Feature Requests"}
+                  >
+                    Feature Requests
+                  </option>
+                  <option
+                    value="Bugs / Errors"
+                    selected={prefillData.type === "Bugs / Errors"}
+                  >
+                    Bugs / Errors
+                  </option>
+                  <option
+                    value="Training / Document Requests"
+                    selected={
+                      prefillData.type === "Training / Document Requests"
+                    }
+                  >
                     Training / Document Requests
                   </option>
-                  <option value="Comments">Comments</option>
+                  <option
+                    value="Comments"
+                    selected={prefillData.type === "Comments"}
+                  >
+                    Comments
+                  </option>
                 </Form.Control>
               </Group>
             )}
