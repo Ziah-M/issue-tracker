@@ -8,13 +8,9 @@ const Home = (props) => {
 
   const handleClick = () => {
     firebase.createProject({
-      title: "Add more features",
       projectName: "Portfolio",
       description: "this is test project 2",
-      assignedDev: "Citizen",
-      priority: "High",
-      status: "Open",
-      type: "Bugs / Errors",
+      assignedDev: "Ziah",
       created: new Date().toUTCString(),
     });
   };

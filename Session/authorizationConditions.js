@@ -1,6 +1,6 @@
 const conditions = {
   isAdmin: (authUser) =>
-    authUser && authUser.roles && authUser.roles === "ADMIN",
+    authUser && authUser.roles && authUser.role === "ADMIN",
   isSignedIn: (authUser) => !!authUser,
 };
 
