@@ -7,7 +7,7 @@ const PersonnelOverview = ({ users = [] }) => {
   const headings = ["User", "Email", "Role"];
 
   const sortedUsers = users.map((user) => {
-    const { name, email, role, uid } = user;
+    const { name, email, role } = user;
 
     return [name, email, role];
   });

@@ -5,13 +5,13 @@ import Comments from "./Comments";
 import Details from "./Details";
 import Edit from "./Edit";
 import History from "./History";
-import { useTicket } from "../../Hooks";
+import { useTicket, useChild } from "../../Hooks";
 import { useParams } from "react-router";
 import styled from "styled-components";
 
 const Ticket = () => {
   const { id } = useParams();
-  const ticket = useTicket(id);
+  const ticket = useChild("tickets", id);
 
   return (
     <ContentArea>

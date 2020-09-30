@@ -3,18 +3,17 @@ import { Card } from "../../Components";
 import styled from "styled-components";
 import { CardTable } from "../../Components";
 
-const TicketsOverview = () => {
+const TicketsOverview = ({ tickets }) => {
   const headings = ["Title", "Submitter", "Developer", "Status", "Created", ""];
-  const rows = [
-    [
-      "Better styling",
-      "Ziah",
-      "demo dev",
-      "open",
-      "16/09/2020 5:51 PM",
-      "More Details",
-    ],
-  ];
+  const rows = tickets
+    ? tickets.map((ticket) => [
+        ticket.title,
+        ticket.submitter,
+        ticket.assignedDev,
+        ticket.status,
+        ticket.created,
+      ])
+    : [[]];
 
   return (
     <Card

@@ -1,16 +1,14 @@
 import React from "react";
-import { Card, CardTable, ContentArea } from "../../Components";
-import { convertObjectToList } from "../../Helpers";
-import { useProjects } from "../../Hooks";
-import * as ROUTES from "../../routes";
 import { Button as UnstyledButton } from "react-bootstrap";
 import styled from "styled-components";
+import { Card, CardTable, ContentArea } from "../../Components";
+import { useChildren } from "../../Hooks";
+import * as ROUTES from "../../routes";
 
 const MyProjects = () => {
-  const projects = useProjects();
-  const projectsArray = !projects ? [] : convertObjectToList(projects);
+  const { data: projects } = useChildren("projects");
 
-  const sortedProjects = projectsArray.map((project) => {
+  const sortedProjects = projects.map((project) => {
     const { projectName: title, description, uid } = project;
 
     return [

@@ -3,9 +3,12 @@ import { Card } from "../../Components";
 import styled from "styled-components";
 import { CardTable } from "../../Components";
 
-const AssignedPersonnel = () => {
+const AssignedPersonnel = ({ users }) => {
   const headings = ["User", "Email", "Role"];
-  const rows = [["Ziah Mayne", "Demo@Demo.com", "Admin"]];
+
+  const rows = users
+    ? users.map((user) => [user.name, user.email, user.role])
+    : [[]];
 
   return (
     <Card

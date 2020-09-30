@@ -1,19 +1,14 @@
 import React from "react";
-import { withAuthorization, conditions } from "../../Session";
-import { ContentArea, Card } from "../../Components";
+import styled from "styled-components";
+import { ContentArea } from "../../Components";
+import { useChildren } from "../../Hooks";
+import { conditions, withAuthorization } from "../../Session";
 import AssignRoleForm from "./AssignRoleForm";
 import PersonnelOverview from "./PersonnelOverview";
-import styled from "styled-components";
 
 const ManageRoles = ({ authUser }) => {
-  const users = [
-    { name: "Ziah Mayne", email: "demo@demo.com", role: "ADMIN" },
-    {
-      name: "Demo Dev",
-      email: "devdemo@demo.com",
-      role: "Developer",
-    },
-  ];
+  const { data: users } = useChildren("users");
+
   return (
     <ContentArea>
       <div style={{ height: "auto", width: "100%", overflow: "hidden" }}>

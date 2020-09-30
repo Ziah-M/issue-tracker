@@ -84,6 +84,9 @@ class Firebase {
   /* ------------------------------------------------------------------ */
   /* --------------------------- API ENDPOINTS ------------------------- */
   /* ------------------------------------------------------------------ */
+  // Returns the ref to the data found at path
+  // e.g. id = 1, path = `tickets/${id}`
+  ref = (path) => this.db.ref(`${path}`);
 
   // *** --- TICKETS --- ***
   tickets = () => this.db.ref("tickets");
@@ -92,7 +95,8 @@ class Firebase {
   // *** --- PROJECTS --- ***
   projects = () => this.db.ref("projects");
   project = (id) => this.db.ref(`projects/${id}`);
-
+  projectAssignedPersonnel = (id) => this.db.ref(`projects/${id}/personnel`);
+  projectAssignedTickets = (id) => this.db.ref(`projects/${id}/tickets`);
   /* ------------------------------------------------------------------ */
   /* --------------------------- CRUD OPERATIONS ------------------------- */
   /* ------------------------------------------------------------------ */

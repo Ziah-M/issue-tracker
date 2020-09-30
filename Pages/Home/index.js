@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { FirebaseContext } from "../../Firebase";
-import { useTickets } from "../../Hooks";
+import { useChildren } from "../../Hooks";
 
 const Home = (props) => {
   const firebase = useContext(FirebaseContext);
-  const tickets = useTickets();
+  const { data: tickets } = useChildren("tickets");
 
   const handleClick = () => {
     firebase.createProject({

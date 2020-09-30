@@ -16,17 +16,17 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
           </Headings>
         </Header>
         <Body>
-          {rows.map((row, index) => (
+          {rows.map((row=[], index) => (
             <tr key={`table-row-${index}`}>
-              {row.map((item, index) =>
+              {row.map((item = "", index) =>
                 typeof item === "string" ? (
                   <td key={`table-row-item-${index}`}>{item}</td>
                 ) : (
                   <td key={`table-row-item-${index}`}>
-                    {item.link1 && (
+                    {!!item.link1 && (
                       <Link href={item.link1.to}>{item.link1.name}</Link>
                     )}
-                    {item.link2 && (
+                    {!!item.link2 && (
                       <Link href={item.link2.to}>{item.link2.name}</Link>
                     )}
                   </td>
