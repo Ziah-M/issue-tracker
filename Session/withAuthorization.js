@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../Firebase";
@@ -13,34 +13,29 @@ import AuthUserContext from "./context";
 const withAuthorization = (condition) => (Component) => {
   const WithAuthorization = (props) => {
     const history = useHistory();
+    const authUser = useContext(AuthUserContext);
 
     // If firebase auth changes, check condition again to force re-direct
 
     useEffect(() => {
-      const next = (mergedAuthUser) => {
-        if (!condition(mergedAuthUser)) {
-          history.push(ROUTES.SIGN_IN);
-        }
-      };
+      if (!authUser) {
+        // is null
+        history.push(ROUTES.SIGN_IN);
+      } else if (!condition(authUser)) {
+        console.log(
+          "Restricted. You do not have the required permission to access this route."
+        );
+      }
+    }, [authUser, condition]);
 
-      // Fallback is called if authUser is null
-      const fallback = () => history.push(ROUTES.SIGN_IN);
-
-      props.firebase.onAuthUserListener(next, fallback);
-    }, []);
-
-    return (
-      <AuthUserContext.Consumer>
-        {(authUser) =>
-          condition(authUser) ? (
-            <Component {...props} authUser={authUser} />
-          ) : null
-        }
-      </AuthUserContext.Consumer>
+    return condition(authUser) ? (
+      <Component {...props} authUser={authUser} />
+    ) : (
+      <></>
     );
   };
 
-  return withFirebase(WithAuthorization);
+  return WithAuthorization;
 };
 
 export default withAuthorization;

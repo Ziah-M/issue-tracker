@@ -22,7 +22,7 @@ const Navbar = ({ setShowAddTicket }) => {
           <Link href={ROUTES.MANAGE_USERS}>Home</Link>
         </Li>
         <Li>
-          <Button variant="success" onClick={() => setShowAddTicket(true)}>
+          <Button variant="success" size='sm' onClick={() => setShowAddTicket(true)}>
             Create Ticket
           </Button>
         </Li>
