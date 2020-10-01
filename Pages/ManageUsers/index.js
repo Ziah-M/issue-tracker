@@ -1,14 +1,13 @@
 import React from "react";
-import { withAuthorization, conditions } from "../../Session";
-import { TitleBanner, Card, ContentArea, CardTable } from "../../Components";
-import { useChildren, useNestedChildren, useSet, useRemove } from "../../Hooks";
-import { convertObjectToList } from "../../Helpers";
-import UsersTable from "./UsersTable";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { Card, ContentArea } from "../../Components";
+import { useRemove, useSet } from "../../Hooks";
+import UsersTable from "./UsersTable";
 
 const ManageUsers = (props) => {
-  const { data: projects } = useChildren("projects");
-  const { data: users } = useChildren("users");
+  const projects = useSelector((store) => store.projects);
+  const users = useSelector((store) => store.users);
 
   const add = useSet();
   const remove = useRemove();

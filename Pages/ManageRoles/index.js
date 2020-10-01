@@ -1,13 +1,12 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import { ContentArea } from "../../Components";
-import { useChildren } from "../../Hooks";
-import { conditions, withAuthorization } from "../../Session";
 import AssignRoleForm from "./AssignRoleForm";
 import PersonnelOverview from "./PersonnelOverview";
 
 const ManageRoles = ({ authUser }) => {
-  const { data: users } = useChildren("users");
+const users = useSelector(store => store.users)
 
   return (
     <ContentArea>

@@ -1,13 +1,21 @@
-import { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../Firebase";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { FirebaseContext } from "../../Firebase";
+import { useCheckForDemo } from "../../Session";
 
 const useSet = () => {
   const [addDetails, setAddDetails] = useState({});
-
   const firebase = useContext(FirebaseContext);
+  const isDemo = useCheckForDemo();
+  const dispatch = useDispatch();
 
-  const add = (path = "") => {
-    if (!!path) {
+  const add = ({ path = "", newData = {}, action = (f) => f }) => {
+    // FOR DEMO USERS ->
+    // path should be a callback function
+    // which is sent to dispatch to update local state, without triggering a firebase update
+    if (isDemo) {
+      dispatch(action(newData));
+    } else if (!!path) {
       setAddDetails({
         path: path,
       });

@@ -1,10 +1,12 @@
-import useChild from "./useChild";
-import useChildren from "./useChildren";
-import useNestedChildren from "./useNestedChildren";
-import useUpdate from "./useUpdate";
-import useRemove from "./useRemove";
-import usePush from "./usePush";
-import useSet from "./useSet";
+import useChild from "./CRUD/useChild";
+import useChildren from "./CRUD/useChildren";
+import useNestedChildren from "./CRUD/useNestedChildren";
+import useUpdate from "./CRUD/useUpdate";
+import useRemove from "./CRUD/useRemove";
+import usePush from "./CRUD/usePush";
+import useSet from "./CRUD/useSet";
+import useActivateDemo from "./useActivateDemo";
+import useFirebaseListener from "./CRUD/useFirebaseListerner";
 
 export {
   useChildren,
@@ -14,4 +16,6 @@ export {
   useRemove,
   useSet,
   usePush,
+  useActivateDemo,
+  useFirebaseListener,
 };

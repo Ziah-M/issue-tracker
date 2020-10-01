@@ -1,12 +1,12 @@
 import React from "react";
-import { Card, CardTable, ContentArea } from "../../Components";
-import { useChildren } from "../../Hooks";
-import * as ROUTES from "../../routes";
 import { NavLink as Link } from "react-bootstrap";
-import styled from 'styled-components'
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import { Card, CardTable, ContentArea } from "../../Components";
+import * as ROUTES from "../../routes";
 
 const MyTickets = () => {
-  const { data: tickets } = useChildren("tickets");
+  const tickets = useSelector((store) => store.tickets);
 
   const sortedTickets = tickets.map((ticket) => {
     const {

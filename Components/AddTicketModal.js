@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button as UnstyledButton,
-  Form,
-  NavLink as Link,
-  Modal,
   Col,
+  Form,
+  Modal,
+  NavLink as Link
 } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Card from "./Card";
 import { PATHS } from "../Firebase";
-import { useChildren, usePush, useUpdate } from "../Hooks";
+import { usePush, useUpdate } from "../Hooks";
 
 const AddTicketModal = ({
   handleShow,
@@ -71,8 +71,8 @@ const EditForm = ({
     path: isEdit ? PATHS.TICKET(prefillData.uid) : PATHS.TICKETS(),
   };
 
-  const { data: projects = [] } = useChildren("projects");
-  const { data: users = [] } = useChildren("users");
+  const projects = useSelector((store) => store.projects);
+  const users = useSelector((store) => store.users);
 
   const onSubmit = (data) => {
     addToDB.setter(addToDB.path, data);

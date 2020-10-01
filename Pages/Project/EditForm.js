@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Form as UnstyledForm,
   Button as UnstyledButton,
-  NavLink as Link,
+  Form as UnstyledForm,
+  NavLink as Link
 } from "react-bootstrap";
-import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useUpdate, useChildren } from "../../Hooks";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { PATHS } from "../../Firebase";
+import { useUpdate } from "../../Hooks";
 
 const EditForm = ({ project }) => {
   const { register, handleSubmit, errors } = useForm();
   const update = useUpdate();
 
-  const { data: projects = [] } = useChildren("projects");
-  const { data: users = [] } = useChildren("users");
+  const users = useSelector((store) => store.users);
+  const projects = useSelector((store) => store.projects);
 
   const onSubmit = (data) => {
     let alteredData = {};

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../Firebase";
-import { convertObjectToList } from "../Helpers";
+import { FirebaseContext } from "../../Firebase";
+import { convertObjectToList } from "../../Helpers";
 
 // Returns ALL children found at (path/id/nestedPath) in the database
 

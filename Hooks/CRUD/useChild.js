@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { FirebaseContext } from "../Firebase";
+import { useContext, useEffect, useState } from "react";
+import { FirebaseContext } from "../../Firebase";
 
 // Returns SPECIFIC child of (id) found at (path) in the database
 

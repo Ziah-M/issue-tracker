@@ -7,13 +7,15 @@ import {
   Button,
 } from "react-bootstrap";
 import * as ROUTES from "../routes";
+import { useAuthUser } from "../Session";
 
 const Navbar = ({ setShowAddTicket }) => {
+  const authUser = useAuthUser();
   return (
     <Wrapper>
       <List>
         <Li>
-          <Link href={ROUTES.HOME}>Loggined in as:</Link>
+          <Link href={ROUTES.HOME}>Logged in as: {`${!!authUser && authUser.name}`}</Link>
         </Li>
         <Li>
           <Control placeholder="search" />
@@ -22,7 +24,11 @@ const Navbar = ({ setShowAddTicket }) => {
           <Link href={ROUTES.MANAGE_USERS}>Home</Link>
         </Li>
         <Li>
-          <Button variant="success" size='sm' onClick={() => setShowAddTicket(true)}>
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => setShowAddTicket(true)}
+          >
             Create Ticket
           </Button>
         </Li>

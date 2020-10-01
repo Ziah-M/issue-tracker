@@ -1,23 +1,17 @@
 import React from "react";
-import { ContentArea, Card } from "../../Components";
-import AssignedPersonnel from "./AssignedPersonnel";
-import Overview from "./Details";
-import TicketsOverview from "./TicketsOverview";
-import Edit from "./Edit";
-import {
-  useChild,
-  useChildren,
-  useNestedChildren,
-  useTickets,
-  useUsers,
-} from "../../Hooks";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { convertObjectToList } from "../../Helpers";
+import { ContentArea } from "../../Components";
+import { useNestedChildren } from "../../Hooks";
+import AssignedPersonnel from "./AssignedPersonnel";
+import Overview from "./Details";
+import Edit from "./Edit";
+import TicketsOverview from "./TicketsOverview";
 
 const Project = () => {
   const { id } = useParams();
-  const project = useChild("projects", id);
+  const project = useSelector((store) => store.projects[id]);
   const { data: assignedPersonnel } = useNestedChildren(
     "projects",
     id,
@@ -29,9 +23,8 @@ const Project = () => {
     "tickets"
   );
 
-  const { data: tickets } = useChildren("tickets");
-  const { data: users } = useChildren("users");
-
+  const tickets = useSelector((store) => store.tickets);
+  const users = useSelector((store) => store.users);
 
   // let assignedTickets = []
 

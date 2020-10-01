@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { FirebaseContext } from "../../Firebase";
-import { useChildren } from "../../Hooks";
 
 const Home = (props) => {
   const firebase = useContext(FirebaseContext);
-  const { data: tickets } = useChildren("tickets");
+
+  const tickets = useSelector((store) => store.tickets);
 
   const handleClick = () => {
     firebase.createProject({

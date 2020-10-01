@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { ContentArea, Card, AddTicketModal } from "../../Components";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import styled from "styled-components";
+import { AddTicketModal, ContentArea } from "../../Components";
 import Attachment from "./Attachment";
 import Comments from "./Comments";
 import Details from "./Details";
 import History from "./History";
-import { useTicket, useChild } from "../../Hooks";
-import { useParams } from "react-router";
-import styled from "styled-components";
 
 const Ticket = () => {
   const { id } = useParams();
-  const ticket = useChild("tickets", id);
+  const ticket = useSelector((store) => store.tickets[id]);
 
   const [showAddTicket, setShowAddTicket] = useState(false);
   const handleCloseAddTicket = () => setShowAddTicket(false);
