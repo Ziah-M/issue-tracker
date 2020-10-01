@@ -39,4 +39,4 @@ const ColRight = styled.div`
   display: inline-block;
 `;
 
-export default withAuthorization(conditions.isSignedIn)(ManageRoles);
+export default ManageRoles;

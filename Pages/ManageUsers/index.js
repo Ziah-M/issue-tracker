@@ -18,13 +18,13 @@ const ManageUsers = (props) => {
   };
 
   const removeUserFromProject = (userId, projectId) => {
-    remove(`projects/${projectId}/personnel/${userId}`)
+    remove(`projects/${projectId}/personnel/${userId}`);
   };
 
   return (
     <ContentArea>
       {projects.map((project) => {
-        const { title, projectName, personnel={} } = project;
+        const { title, projectName, personnel = {} } = project;
 
         const usersWithAssigned = users.map((user) => {
           return !!personnel[`${user.uid}`]
@@ -57,4 +57,4 @@ const Wrapper = styled.div`
   margin-bottom: 80px;
 `;
 
-export default withAuthorization(conditions.isAdmin)(ManageUsers);
+export default ManageUsers;

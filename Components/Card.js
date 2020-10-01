@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   background: white;
   width: 100%;
   height: 100%;
+  padding:0 2% 2% 2%;
   border-radius:5px;
   user-select:none;
 `;
