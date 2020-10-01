@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import { Table as UnstyledTable, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { NavLink as Link } from "react-bootstrap";
+import _ from "lodash";
+
+// HELPER FUNCTION FOR SORTING ROWS BY PROPERTY ON A ROW
+const sort = (rows = [[]], index = 0, reverse = false) => {
+  let sorted = _.sortBy(rows, (row) => row[index]);
+
+  if (reverse) {
+    sorted = sorted.reverse();
+  }
+
+  return sorted;
+};
 
 const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
   // --- PAGINATION ---
@@ -11,22 +23,45 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
   const rangeEnd = Math.min(page * resultsPerPage, rows.length);
   const totalPages = 1 + parseInt((rangeEnd - 1) / 10);
 
+  // --- SORTING ---
+  const [sortColumnIndex, setSortColumnIndex] = useState(0);
+  const [isReversed, setIsReversed] = useState(false);
+
+  const sortedRows = sort(rows, sortColumnIndex, isReversed);
+  console.log("SORTED ROWS: ", sortedRows);
+
+  const handleChangeSortColumn = (index) => {
+    if (index === sortColumnIndex) {
+      setIsReversed(!isReversed);
+    }
+
+    if (index !== sortColumnIndex) {
+      setSortColumnIndex(index);
+      setIsReversed(false);
+    }
+  };
+
   return (
     <Wrapper>
       <Table striped size="sm">
         <Header>
-          <tr>Entries &amp; Search</tr>
+          <Tr>Entries &amp; Search</Tr>
           <Headings>
             {headings.map((heading, index) => (
-              <td key={`heading-table-${index}`}>{heading}</td>
+              <td
+                key={`heading-table-${index}`}
+                onClick={() => handleChangeSortColumn(index)}
+              >
+                {heading}
+              </td>
             ))}
           </Headings>
         </Header>
         <Body>
-          {rows.map(
+          {sortedRows.map(
             (row = [], index) =>
               index < rangeEnd && (
-                <tr key={`table-row-${index}`}>
+                <Tr key={`table-row-${index}`}>
                   {row.map((item = "", index) =>
                     typeof item === "string" ? (
                       <td key={`table-row-item-${index}`}>{item}</td>
@@ -34,7 +69,7 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
                       <td key={`table-row-item-${index}`}>{item}</td>
                     )
                   )}
-                </tr>
+                </Tr>
               )
           )}
         </Body>
@@ -103,14 +138,17 @@ const Table = styled(UnstyledTable)`
 
 const Header = styled.thead`
   min-height: 60px;
+  width: 100%;
 `;
 
 const Headings = styled.tr`
   font-weight: 700;
+  width: 100%;
 `;
 
 const Body = styled.tbody`
   min-height: 80px;
+  width: 100%;
 `;
 
 const Footer = styled.div`
@@ -127,6 +165,10 @@ const Pages = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
+`;
+
+const Tr = styled.tr`
+  width: 100%;
 `;
 
 export default CardTable;
