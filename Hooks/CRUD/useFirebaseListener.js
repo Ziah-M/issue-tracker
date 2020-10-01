@@ -20,23 +20,21 @@ const useFirebaseListener = () => {
 
   useEffect(() => {
     if (!isDemo && !!users) {
-      console.log("ABOUT TO DISPATCH USERS", users);
       dispatch(overwriteUsers(users));
     }
-  }, [users]);
+  }, [users, []]);
 
   useEffect(() => {
     if (!isDemo && !!tickets) {
-      console.log("ABOUT TO DISPATCH TICKETS", tickets);
       dispatch(overwriteTickets(tickets));
     }
-  }, [tickets]);
+  }, [tickets, []]);
 
   useEffect(() => {
     if (!isDemo && !!projects) {
       dispatch(overwriteProjects(projects));
     }
-  }, [projects]);
+  }, [projects, []]);
 };
 
 export default useFirebaseListener;
