@@ -1,37 +1,40 @@
 // LISTENS FOR UPDATES ON THE DB & UPDATES THE GLOBAL STORE
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  overwriteProjects, overwriteTickets,
-
-  overwriteUsers
+  overwriteProjects,
+  overwriteTickets,
+  overwriteUsers,
 } from "../../redux/actions";
 import { useCheckForDemo } from "../../Session";
+import useChildren from "./useChildren";
 
 const useFirebaseListener = () => {
   const dispatch = useDispatch();
 
-  const tickets = useSelector((store) => store.tickets);
-  const users = useSelector((store) => store.users);
-  const projects = useSelector((store) => store.projects);
+  const users = useChildren("users");
+  const tickets = useChildren("tickets");
+  const projects = useChildren("projects");
 
   const isDemo = useCheckForDemo();
 
   useEffect(() => {
-    if (!isDemo) {
-      dispatch(() => overwriteUsers(users));
+    if (!isDemo && !!users) {
+      console.log("ABOUT TO DISPATCH USERS", users);
+      dispatch(overwriteUsers(users));
     }
   }, [users]);
 
   useEffect(() => {
-    if (!isDemo) {
-      dispatch(() => overwriteTickets(tickets));
+    if (!isDemo && !!tickets) {
+      console.log("ABOUT TO DISPATCH TICKETS", tickets);
+      dispatch(overwriteTickets(tickets));
     }
   }, [tickets]);
 
   useEffect(() => {
-    if (!isDemo) {
-      dispatch(() => overwriteProjects(projects));
+    if (!isDemo && !!projects) {
+      dispatch(overwriteProjects(projects));
     }
   }, [projects]);
 };

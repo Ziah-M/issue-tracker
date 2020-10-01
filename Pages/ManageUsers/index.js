@@ -2,12 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Card, ContentArea } from "../../Components";
+import { convertObjectToList } from "../../Helpers";
 import { useRemove, useSet } from "../../Hooks";
 import UsersTable from "./UsersTable";
 
 const ManageUsers = (props) => {
   const projects = useSelector((store) => store.projects);
   const users = useSelector((store) => store.users);
+  const projectsArray = convertObjectToList(projects);
+  const usersArray = convertObjectToList(users);
+
+  console.log('USERS ARE',users)
 
   const add = useSet();
   const remove = useRemove();
@@ -22,10 +27,10 @@ const ManageUsers = (props) => {
 
   return (
     <ContentArea>
-      {projects.map((project) => {
+      {projectsArray.map((project) => {
         const { title, projectName, personnel = {} } = project;
 
-        const usersWithAssigned = users.map((user) => {
+        const usersWithAssigned = usersArray.map((user) => {
           return !!personnel[`${user.uid}`]
             ? {
                 ...user,

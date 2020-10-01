@@ -3,7 +3,7 @@ import { Card } from "../../Components";
 import styled from "styled-components";
 import { CardTable } from "../../Components";
 
-const AssignedPersonnel = ({ users }) => {
+const AssignedPersonnel = ({ users=[] }) => {
   const headings = ["User", "Email", "Role"];
 
   const rows = users

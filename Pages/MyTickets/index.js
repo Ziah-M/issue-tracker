@@ -3,12 +3,17 @@ import { NavLink as Link } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Card, CardTable, ContentArea } from "../../Components";
+import { convertObjectToList } from "../../Helpers";
 import * as ROUTES from "../../routes";
 
 const MyTickets = () => {
   const tickets = useSelector((store) => store.tickets);
 
-  const sortedTickets = tickets.map((ticket) => {
+  const ticketsArray = convertObjectToList(tickets);
+
+  console.log(ticketsArray)
+
+  const sortedTickets = ticketsArray.map((ticket) => {
     const {
       title,
       projectName,

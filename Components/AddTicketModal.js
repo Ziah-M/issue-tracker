@@ -4,12 +4,13 @@ import {
   Col,
   Form,
   Modal,
-  NavLink as Link
+  NavLink as Link,
 } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { PATHS } from "../Firebase";
+import { convertObjectToList } from "../Helpers";
 import { usePush, useUpdate } from "../Hooks";
 
 const AddTicketModal = ({
@@ -73,6 +74,9 @@ const EditForm = ({
 
   const projects = useSelector((store) => store.projects);
   const users = useSelector((store) => store.users);
+
+  const projectsArray = convertObjectToList(projects);
+  const usersArray = convertObjectToList(users);
 
   const onSubmit = (data) => {
     addToDB.setter(addToDB.path, data);
@@ -142,7 +146,7 @@ const EditForm = ({
                 <Form.Label>Assigned To Project</Form.Label>
                 <Form.Control {...props} as="select" id="projectName">
                   <option value=""></option>
-                  {projects.map((project) => (
+                  {projectsArray.map((project) => (
                     <option
                       value={project.projectName}
                       selected={prefillData.projectName === project.projectName}
@@ -170,7 +174,7 @@ const EditForm = ({
                 <Form.Label>Assigned To Developer</Form.Label>
                 <Form.Control {...props} as="select" id="assignedTo">
                   <option value=""></option>
-                  {users.map((user) => (
+                  {usersArray.map((user) => (
                     <option
                       value={user.name}
                       selected={prefillData.assignedTo === user.name}

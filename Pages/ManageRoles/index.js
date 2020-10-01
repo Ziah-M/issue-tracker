@@ -1,12 +1,15 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { ContentArea } from "../../Components";
+import { convertObjectToList } from "../../Helpers";
 import AssignRoleForm from "./AssignRoleForm";
 import PersonnelOverview from "./PersonnelOverview";
 
 const ManageRoles = ({ authUser }) => {
-const users = useSelector(store => store.users)
+  const users = useSelector((store) => store.users);
+
+  const usersArray = convertObjectToList(users);
 
   return (
     <ContentArea>
@@ -16,10 +19,10 @@ const users = useSelector(store => store.users)
       <h1>Manage User Roles</h1>
       <div style={{ width: "100%", border: "2px solid red" }}>
         <ColLeft>
-          <AssignRoleForm users={users} />
+          <AssignRoleForm users={usersArray} />
         </ColLeft>
         <ColRight>
-          <PersonnelOverview users={users} />
+          <PersonnelOverview users={usersArray} />
         </ColRight>
       </div>
     </ContentArea>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import { ContentArea } from "../../Components";
+import { convertObjectToList } from "../../Helpers";
 import { useNestedChildren } from "../../Hooks";
 import AssignedPersonnel from "./AssignedPersonnel";
 import Overview from "./Details";
@@ -12,19 +13,30 @@ import TicketsOverview from "./TicketsOverview";
 const Project = () => {
   const { id } = useParams();
   const project = useSelector((store) => store.projects[id]);
-  const { data: assignedPersonnel } = useNestedChildren(
-    "projects",
-    id,
-    "personnel"
+
+  const assignedPersonnel = useSelector(
+    (store) =>
+      store &&
+      store.projects &&
+      store.projects[id] &&
+      store.projects[id].personnel
   );
-  const { data: assignedTickets } = useNestedChildren(
-    "projects",
-    id,
-    "tickets"
+  const assignedPersonnelArray = convertObjectToList(assignedPersonnel);
+
+  const assignedTickets = useSelector(
+    (store) =>
+      store &&
+      store.projects &&
+      store.projects[id] &&
+      store.projects[id].tickets
   );
+  const assignedTicketsArray = convertObjectToList(assignedTickets);
 
   const tickets = useSelector((store) => store.tickets);
   const users = useSelector((store) => store.users);
+
+  const usersArray = convertObjectToList(users);
+  const ticketsArray = convertObjectToList(tickets);
 
   // let assignedTickets = []
 
@@ -48,10 +60,10 @@ const Project = () => {
             <Overview project={project} />
           </Section>
           <Section>
-            <AssignedPersonnel users={users} />
+            <AssignedPersonnel users={usersArray} />
           </Section>
           <Section>
-            <TicketsOverview tickets={tickets} />
+            <TicketsOverview tickets={ticketsArray} />
           </Section>
 
           <Modal>

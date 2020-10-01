@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import RouterSwitch from "./RouterSwitch";
-import { useAuthUser, useCheckForDemo, withAuthentication } from "./Session";
-import { Navbar, Sidebar } from "./Components";
 import styled from "styled-components";
-import { AddTicketModal } from "./Components";
-import useActivateDemo from "./Hooks/useActivateDemo";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import { AddTicketModal, Navbar, Sidebar } from "./Components";
 import { useFirebaseListener } from "./Hooks";
+import useActivateDemo from "./Hooks/useActivateDemo";
+import RouterSwitch from "./RouterSwitch";
+import { withAuthentication } from "./Session";
 
 const App = () => {
   const [showAddTicket, setShowAddTicket] = useState(false);
@@ -18,20 +15,18 @@ const App = () => {
   useFirebaseListener();
 
   return (
-    <Provider store={store}>
-      <Wrapper>
-        <Sidebar />
-        <Inner>
-          <Navbar setShowAddTicket={handleShowAddTicket} />
-          <RouterSwitch />
-        </Inner>
-        <AddTicketModal
-          show={showAddTicket}
-          handleShow={handleShowAddTicket}
-          handleClose={handleCloseAddTicket}
-        />
-      </Wrapper>
-    </Provider>
+    <Wrapper>
+      <Sidebar />
+      <Inner>
+        <Navbar setShowAddTicket={handleShowAddTicket} />
+        <RouterSwitch />
+      </Inner>
+      <AddTicketModal
+        show={showAddTicket}
+        handleShow={handleShowAddTicket}
+        handleClose={handleCloseAddTicket}
+      />
+    </Wrapper>
   );
 };
 

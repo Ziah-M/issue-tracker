@@ -3,12 +3,15 @@ import { Button as UnstyledButton, NavLink as Link } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Card, CardTable, ContentArea } from "../../Components";
+import { convertObjectToList } from "../../Helpers";
 import * as ROUTES from "../../routes";
 
 const MyProjects = () => {
   const projects = useSelector((store) => store.projects);
 
-  const sortedProjects = projects.map((project) => {
+  const projectsArray = convertObjectToList(projects);
+
+  const sortedProjects = projectsArray.map((project) => {
     const { projectName: title, description, uid } = project;
 
     return [

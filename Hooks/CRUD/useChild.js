@@ -4,7 +4,7 @@ import { FirebaseContext } from "../../Firebase";
 // Returns SPECIFIC child of (id) found at (path) in the database
 
 const useList = (path = "", id = "") => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   const firebase = useContext(FirebaseContext);
 
   const fullPath = `${path}/${id}`;
