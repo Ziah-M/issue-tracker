@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table as UnstyledTable, Button } from "react-bootstrap";
 import styled from "styled-components";
-import { NavLink as Link } from "react-bootstrap";
+import { NavLink as Link, InputGroup, FormControl } from "react-bootstrap";
 import _ from "lodash";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,22 @@ const sort = (rows = [[]], index = 0, reverse = false) => {
   return sorted;
 };
 
+// Searches multiple ROWS to check if any ELEMENT of a ROW includes the QUERY
+const localDatatableSearch = (rows = [[]], query = "") => {
+  if (!!query) {
+    const filteredRows = rows.filter((row) => {
+      const itemsMatchingQuery = row.filter((item = "") => {
+        return typeof item !== "string"
+          ? false
+          : !!item.toUpperCase().includes(query.toUpperCase());
+      });
+
+      return itemsMatchingQuery.length ? true : false;
+    });
+    return filteredRows;
+  } else return rows;
+};
+
 const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
   // --- PAGINATION ---
   const [page, setPage] = useState(1);
@@ -30,7 +46,6 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
   const [isReversed, setIsReversed] = useState(false);
 
   const sortedRows = sort(rows, sortColumnIndex, isReversed);
-  console.log("SORTED ROWS: ", sortedRows);
 
   const handleChangeSortColumn = (index) => {
     if (index === sortColumnIndex) {
@@ -43,11 +58,28 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
     }
   };
 
+  // --- LOCAL SEARCH ---
+  const [query, setQuery] = useState("");
+
+  const onChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const sortedRowsWithSearchFilter = localDatatableSearch(sortedRows, query);
+
   return (
     <Wrapper>
+      <TopSection>
+        Entries &amp;{" "}
+        <SearchInput size="sm">
+          <InputGroup.Prepend>
+            <InputGroup.Text>Search:</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl onChange={onChange} value={query} />
+        </SearchInput>
+      </TopSection>
       <Table striped size="sm">
         <Header>
-          <Tr>Entries &amp; Search</Tr>
           <Headings>
             {headings.map((heading, index) => (
               <td
@@ -74,7 +106,7 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
           </Headings>
         </Header>
         <Body>
-          {sortedRows.map(
+          {sortedRowsWithSearchFilter.map(
             (row = [], index) =>
               index < rangeEnd && (
                 <Tr key={`table-row-${index}`}>
@@ -186,6 +218,20 @@ const Pages = styled.div`
 
 const Tr = styled.tr`
   width: 100%;
+`;
+
+const TopSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  font-size: 18px;
+`;
+
+const SearchInput = styled(InputGroup)`
+  max-width: 200px;
 `;
 
 export default CardTable;
