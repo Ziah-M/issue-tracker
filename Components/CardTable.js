@@ -3,6 +3,8 @@ import { Table as UnstyledTable, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { NavLink as Link } from "react-bootstrap";
 import _ from "lodash";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // HELPER FUNCTION FOR SORTING ROWS BY PROPERTY ON A ROW
 const sort = (rows = [[]], index = 0, reverse = false) => {
@@ -52,7 +54,21 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
                 key={`heading-table-${index}`}
                 onClick={() => handleChangeSortColumn(index)}
               >
-                {heading}
+                <span>
+                  {heading}{" "}
+                  {!!heading.replace(/\s/g, "").length && (
+                    <FontAwesomeIcon
+                      style={{
+                        color: index !== sortColumnIndex ? "gray" : "green",
+                      }}
+                      icon={
+                        index === sortColumnIndex && isReversed
+                          ? faSortUp
+                          : faSortDown
+                      }
+                    />
+                  )}
+                </span>
               </td>
             ))}
           </Headings>
@@ -144,6 +160,7 @@ const Header = styled.thead`
 const Headings = styled.tr`
   font-weight: 700;
   width: 100%;
+  white-space: nowrap;
 `;
 
 const Body = styled.tbody`
