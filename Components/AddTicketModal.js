@@ -7,11 +7,12 @@ import {
   NavLink as Link,
 } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { PATHS } from "../Firebase";
 import { convertObjectToList } from "../Helpers";
 import { usePush, useUpdate } from "../Hooks";
+import useFirebaseActions from "../redux/useFirebaseActions";
 
 const AddTicketModal = ({
   handleShow,
@@ -65,12 +66,15 @@ const EditForm = ({
 }) => {
   const { register, control, handleSubmit, errors } = useForm();
   const update = useUpdate();
-  const push = usePush();
+  // const push = usePush();
 
-  const addToDB = {
-    setter: isEdit ? update : push,
-    path: isEdit ? PATHS.TICKET(prefillData.uid) : PATHS.TICKETS(),
-  };
+  const dispatch = useDispatch();
+  const { addTicket } = useFirebaseActions();
+
+  // const addToDB = {
+  //   setter: isEdit ? update : push,
+  //   path: isEdit ? PATHS.TICKET(prefillData.uid) : PATHS.TICKETS(),
+  // };
 
   const projects = useSelector((store) => store.projects);
   const users = useSelector((store) => store.users);
@@ -79,7 +83,9 @@ const EditForm = ({
   const usersArray = convertObjectToList(users);
 
   const onSubmit = (data) => {
-    addToDB.setter(addToDB.path, data);
+    // addToDB.setter(addToDB.path, data);
+    console.log('SUBMITTING FORM NOW')
+    dispatch(addTicket(data));
     handleClose();
   };
 

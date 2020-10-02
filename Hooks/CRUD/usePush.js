@@ -9,13 +9,9 @@ const usePush = () => {
   const isDemo = useCheckForDemo();
   const dispatch = useDispatch();
 
-  const add = ({ path = "", newData = {}, action = (f) => f }) => {
-    // FOR DEMO USERS ->
-    // path should be a callback function
-    // which is sent to dispatch to update local state, without triggering a firebase update
-    if (isDemo) {
-      dispatch(action(newData));
-    } else if (!!path && !!newData) {
+  const add = (path = "", newData = {}, action = (f) => f ) => {
+    console.log("ABOUT TO TRIGGER FIREBASE PUSH",newData)
+    if (!!path && !!newData) {
       setAddDetails({
         path: path,
         data: newData,
