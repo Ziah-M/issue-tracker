@@ -16,8 +16,8 @@ const useFirebaseActions = () => {
   const setInDb = useSet();
   const removeFromDb = useRemove();
 
-  // ----   THUNKS   ----
-
+  // ----            THUNKS            ----
+  // ----            TICKETS            ----
   const addTicket = (details) => {
     return (dispatch) => {
       if (isDemo) {
@@ -37,6 +37,31 @@ const useFirebaseActions = () => {
         dispatch(actions.editTicket(id, details));
       } else {
         updateDb(`tickets/${id}`, details);
+        return;
+      }
+    };
+  };
+
+  const addTicketComment = (ticketId, data) => {
+    return (dispatch) => {
+      if (isDemo) {
+        console.log("DISPATCHING DEMO ADD COMMENT TO TICKET");
+        dispatch(actions.addTicketComment(ticketId, data));
+      } else {
+        pushToDb(`tickets/${ticketId}/comments`, data);
+        return;
+      }
+    };
+  };
+
+  // ----            PROJECTS            ----
+  const addProject = (details) => {
+    return (dispatch) => {
+      if (isDemo) {
+        console.log("DISPATCHING DEMO ADD PROJECT");
+        dispatch(actions.addProject(details));
+      } else {
+        pushToDb("projects", details);
         return;
       }
     };
@@ -79,6 +104,8 @@ const useFirebaseActions = () => {
       }
     };
   };
+
+  // ----            USERS            ----
 
   const actions = {
     addTicket,
