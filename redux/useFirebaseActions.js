@@ -60,7 +60,7 @@ const useFirebaseActions = () => {
   };
 
   const editTicket = (id, data) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
       const updatedData = removeFalseyValuesFromObject(data);
 
       const ticket = {
@@ -68,11 +68,27 @@ const useFirebaseActions = () => {
         updated: getTimestamp(),
       };
 
+      // History
+      const oldProperties = getState().tickets[id];
+
       if (isDemo) {
         console.log("DISPATCHING DEMO EDIT TICKET");
         dispatch(actions.editTicket(id, ticket));
       } else {
         updateDb(`tickets/${id}`, ticket);
+
+        // PUSH A NEW HISTORY FOR EACH UPDATED PROPERTY
+        Object.keys(ticket).map((key) => {
+          const history = {
+            property: key,
+            oldValue: oldProperties[key],
+            newValue: ticket[key],
+            updated: getTimestamp(),
+          };
+          if (history.property !== "updated") {
+            pushToDb(`tickets/${id}/history`, history);
+          }
+        });
         return;
       }
     };
