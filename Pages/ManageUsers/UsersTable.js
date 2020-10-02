@@ -1,15 +1,25 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { CardTable } from "../../Components";
+import useFirebaseActions from "../../redux/useFirebaseActions";
 
 const UsersTable = ({
   users,
-  add = (f) => f,
-  remove = (f) => f,
   projectId,
 }) => {
+  const dispatch = useDispatch();
+  const { addProjectUser, removeProjectUser } = useFirebaseActions();
+
+  const add = (projectId, userId) => {
+    dispatch(addProjectUser(projectId, userId));
+  };
+
+  const remove = (projectId, userId) => {
+    dispatch(removeProjectUser(projectId, userId));
+  };
+
   const headings = ["User", "Role", " "];
-  console.log(users);
   const rows = users
     ? users.map((user) => [
         user.name,
@@ -18,7 +28,7 @@ const UsersTable = ({
           <Button
             variant="danger"
             size="sm"
-            onClick={() => remove(projectId, user.uid)}
+            onClick={() => add(projectId, user.uid)}
           >
             Remove
           </Button>
@@ -26,7 +36,7 @@ const UsersTable = ({
           <Button
             variant="success"
             size="sm"
-            onClick={() => add(projectId, user.uid)}
+            onClick={() => remove(projectId, user.uid)}
           >
             Add
           </Button>

@@ -1,7 +1,5 @@
 import React from "react";
-import { Card } from "../../Components";
-import styled from "styled-components";
-import { CardTable } from "../../Components";
+import { Card, CardTable } from "../../Components";
 
 const TicketsOverview = ({ tickets }) => {
   const headings = ["Title", "Submitter", "Developer", "Status", "Created", ""];

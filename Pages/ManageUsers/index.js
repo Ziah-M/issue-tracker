@@ -1,9 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Card, ContentArea } from "../../Components";
 import { convertObjectToList } from "../../Helpers";
-import useFirebaseActions from "../../redux/useFirebaseActions";
 import UsersTable from "./UsersTable";
 
 const ManageUsers = (props) => {
@@ -12,40 +11,27 @@ const ManageUsers = (props) => {
   const projectsArray = convertObjectToList(projects);
   const usersArray = convertObjectToList(users);
 
-  console.log("USERS ARE", users);
-  const dispatch = useDispatch();
-  const { addProjectUser, removeProjectUser } = useFirebaseActions();
-
-  const addUserToProjet = (projectId, userId) => {
-    dispatch(addProjectUser(projectId, userId));
-  };
-
-  const removeUserFromProject = (projectId, userId) => {
-    dispatch(removeProjectUser(projectId, userId));
-  };
-
   return (
     <ContentArea>
       {projectsArray.map((project) => {
-        const { title, projectName, personnel = {} } = project;
+        const { description, projectName, personnel = {} } = project;
 
         const usersWithAssigned = usersArray.map((user) => {
           return !!personnel[`${user.uid}`]
             ? {
                 ...user,
-                isAssignedToProject: true,
+                isAssignedToProject: false,
               }
-            : { ...user, isAssignedToProject: false };
+            : { ...user, isAssignedToProject: true };
         });
         return (
           <Wrapper>
-            <Card title={project.projectName} description={project.description}>
-              <UsersTable
-                users={usersWithAssigned}
-                add={addUserToProjet}
-                remove={removeUserFromProject}
-                projectId={project.uid}
-              />
+            <Card
+              title={projectName}
+              description={description}
+              stlye={{ height: "auto" }}
+            >
+              <UsersTable users={usersWithAssigned} projectId={project.uid} />
             </Card>
           </Wrapper>
         );
