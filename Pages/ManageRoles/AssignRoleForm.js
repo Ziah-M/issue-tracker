@@ -3,32 +3,75 @@ import {
   Form as UnstyledForm,
   Button as UnstyledButton,
   NavLink as Link,
+  Col,
 } from "react-bootstrap";
+import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import useFirebaseActions from "../../redux/useFirebaseActions";
 
 const AssignRoleForm = ({ users = [] }) => {
+  const { register, control, handleSubmit, errors } = useForm();
+
+  const dispatch = useDispatch();
+  const { editUserRole } = useFirebaseActions();
+
+  const onSubmit = (data) => {
+    const { selectedUser, selectedRole } = data;
+    if (selectedUser && selectedRole) {
+      dispatch(editUserRole(selectedUser, selectedRole));
+    }
+  };
+
   return (
     <Wrapper>
-      <Form>
-        <Group>
-          <Label>Select 1 or more users</Label>
-          <Form.Control as="select">
-            {users.map((user) => (
-              <option>{user.name}</option>
-            ))}
-          </Form.Control>
-        </Group>
-        <Group>
-          <Label>Select A Role To Assign</Label>
-          <Form.Control as="select">
-            <option value="">Admin</option>
-            <option value="">Project Manager</option>
-          </Form.Control>
-        </Group>
-        <Footer>
-          <Button type="submit">SUBMIT</Button>
-        </Footer>
-      </Form>
+      {users[0] && (
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Col xs="auto">
+            <Controller
+              control={control}
+              name="selectedUser"
+              rules={{}}
+              defaultValue={users[0] && users[0].uid}
+              render={(props) => (
+                <Group>
+                  <Form.Label>Select 1 or more users</Form.Label>
+                  <Form.Control {...props} as="select" id="selectedUser">
+                    {users.map((user, index) => (
+                      <option key={`user-select-${index}`} value={user.uid}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Group>
+              )}
+            />
+          </Col>
+
+          <Col xs="auto">
+            <Controller
+              control={control}
+              name="selectedRole"
+              rules={{}}
+              defaultValue="Project Manager"
+              render={(props) => (
+                <Group>
+                  <Form.Label>Choose a role to assign</Form.Label>
+                  <Form.Control {...props} as="select" id="selectedRole">
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="PROJECT MANAGER">Project Manager</option>
+                  </Form.Control>
+                </Group>
+              )}
+            />
+          </Col>
+          <Footer>
+            <Button type="submit" size="sm" variant="success">
+              SUBMIT
+            </Button>
+          </Footer>
+        </Form>
+      )}{" "}
     </Wrapper>
   );
 };
@@ -36,10 +79,6 @@ const AssignRoleForm = ({ users = [] }) => {
 const Form = styled(UnstyledForm)``;
 
 const Group = styled(Form.Group)``;
-
-const Label = styled(Form.Label)``;
-
-const Control = styled(Form.Control)``;
 
 const Button = styled(UnstyledButton)``;
 
@@ -53,7 +92,7 @@ const Footer = styled.div`
   min-height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export default AssignRoleForm;

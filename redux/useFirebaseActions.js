@@ -98,7 +98,6 @@ const useFirebaseActions = () => {
         dispatch(actions.removeProjectUser(projectId, userId));
       } else {
         const path = `projects/${projectId}/personnel/${userId}`;
-        console.log(path);
         removeFromDb(path);
         return;
       }
@@ -107,12 +106,29 @@ const useFirebaseActions = () => {
 
   // ----            USERS            ----
 
+  const editUserRole = (userId, role) => {
+    return (dispatch) => {
+      console.log("EDIT ROLE:", userId, role);
+      if (isDemo) {
+        console.log("DISPATCHING DEMO EDIT USER ROLE");
+        dispatch(actions.editUserRole(userId));
+      } else {
+        const path = `users/${userId}`;
+        updateDb(path, { role });
+        return;
+      }
+    };
+  };
+
   const actions = {
     addTicket,
     editTicket,
     editProject,
     addProjectUser,
     removeProjectUser,
+    editUserRole,
+    addProject,
+    addTicketComment,
   };
 
   return actions;

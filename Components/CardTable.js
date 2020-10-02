@@ -5,6 +5,7 @@ import { NavLink as Link, InputGroup, FormControl } from "react-bootstrap";
 import _ from "lodash";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import uuid from "uuid";
 
 // HELPER FUNCTION FOR SORTING ROWS BY PROPERTY ON A ROW
 const sort = (rows = [[]], index = 0, reverse = false) => {
@@ -83,7 +84,7 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
           <Headings>
             {headings.map((heading, index) => (
               <td
-                key={`heading-table-${index}`}
+                key={`heading-table-${index}-${uuid()}`}
                 onClick={() => handleChangeSortColumn(index)}
               >
                 <span>
@@ -107,14 +108,22 @@ const CardTable = ({ headings = [], rows = [["No data available"]] }) => {
         </Header>
         <Body>
           {sortedRowsWithSearchFilter.map(
-            (row = [], index) =>
-              index < rangeEnd && (
-                <Tr key={`table-row-${index}`}>
-                  {row.map((item = "", index) =>
+            (row = [], indexRow) =>
+              indexRow < rangeEnd && (
+                <Tr key={`table-row-${indexRow}`}>
+                  {row.map((item = "", indexItem) =>
                     typeof item === "string" ? (
-                      <td key={`table-row-item-${index}`}>{item}</td>
+                      <td
+                        key={`table-row-item-${indexRow}-${indexItem}-${uuid()}`}
+                      >
+                        {item}
+                      </td>
                     ) : (
-                      <td key={`table-row-item-${index}`}>{item}</td>
+                      <td
+                        key={`table-row-item-${indexRow}-${indexItem}-${uuid()}`}
+                      >
+                        {item}
+                      </td>
                     )
                   )}
                 </Tr>
@@ -166,6 +175,7 @@ const getPageButtons = (totalPages, setPage) => {
         variant="light"
         style={{ margin: "0 5px" }}
         onClick={() => setPage(pageNumber)}
+        key={uuid()}
       >
         {pageNumber}
       </Button>,
