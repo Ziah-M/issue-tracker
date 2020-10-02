@@ -15,7 +15,9 @@ const Navbar = ({ setShowAddTicket }) => {
     <Wrapper>
       <List>
         <Li>
-          <Link href={ROUTES.HOME}>Logged in as: {`${!!authUser && authUser.name}`}</Link>
+          <Link href={ROUTES.HOME}>
+            Logged in as: {`${!!authUser && authUser.name}`}
+          </Link>
         </Li>
         <Li>
           <Control placeholder="search" />
@@ -33,7 +35,9 @@ const Navbar = ({ setShowAddTicket }) => {
           </Button>
         </Li>
         <Li>
-          <Link href={ROUTES.MY_TICKETS}>User</Link>
+          <Button variant="danger" size="sm" onClick={() => null}>
+            Log Out
+          </Button>
         </Li>
       </List>
     </Wrapper>
