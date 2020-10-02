@@ -25,6 +25,7 @@ const App = () => {
         show={showAddTicket}
         handleShow={handleShowAddTicket}
         handleClose={handleCloseAddTicket}
+        isEdit={false}
       />
     </Wrapper>
   );

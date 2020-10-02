@@ -22,7 +22,7 @@ const usePush = () => {
     console.log("PATH  ", path, "DATA  ", data);
 
     if (!!path && !!data) {
-      firebase.ref(path).push(addDetails.data);
+      firebase.ref(path).push(addDetails.data)
     }
   }, [addDetails]);
 

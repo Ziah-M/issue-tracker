@@ -7,6 +7,17 @@ import usePush from "../Hooks/CRUD/usePush";
 import useUpdate from "../Hooks/CRUD/useUpdate";
 import { useRemove, useSet } from "../Hooks";
 
+const getTimestamp = () => {
+  // returns a timestamp without seconds
+  const a = new Date();
+  const b = a.toUTCString();
+  const pattern = /:\d\d\sGMT/g;
+  const pattern2 = /\w\w\w,\s/g;
+  const c = b.replace(pattern, "");
+  const d = c.replace(pattern2, "");
+  return d;
+};
+
 const useFirebaseActions = () => {
   const isDemo = useCheckForDemo();
 
@@ -18,13 +29,14 @@ const useFirebaseActions = () => {
 
   // ----            THUNKS            ----
   // ----            TICKETS            ----
-  const addTicket = (details) => {
-    return (dispatch) => {
+  const addTicket = (data) => {
+    return (dispatch, getState) => {
+      const ticket = { ...data, created: getTimestamp() };
       if (isDemo) {
         console.log("DISPATCHING DEMO ADD TICKET");
-        dispatch(actions.addTicket(details));
+        dispatch(actions.addTicket(ticket));
       } else {
-        pushToDb("tickets", details);
+        pushToDb("tickets", ticket);
         return;
       }
     };

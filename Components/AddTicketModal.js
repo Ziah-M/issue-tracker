@@ -16,7 +16,7 @@ const AddTicketModal = ({
   handleShow,
   handleClose,
   show,
-  isEdit,
+  isEdit = false,
   prefillData,
 }) => {
   return (
@@ -63,7 +63,17 @@ const EditForm = ({
     uid: "",
   },
 }) => {
-  const { register, control, handleSubmit, errors } = useForm();
+  const { register, control, handleSubmit, errors } = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      projectName: "",
+      assignedTo: "",
+      status: "",
+      priority: "",
+      type: "",
+    },
+  });
 
   const dispatch = useDispatch();
   const { addTicket, editTicket } = useFirebaseActions();
@@ -76,7 +86,7 @@ const EditForm = ({
 
   const onSubmit = (data) => {
     console.log("SUBMITTING FORM NOW");
-    if (isEdit) {
+    if (!isEdit) {
       dispatch(addTicket(data));
     } else {
       dispatch(editTicket(prefillData.uid, data));
@@ -91,7 +101,6 @@ const EditForm = ({
           <Controller
             control={control}
             name="title"
-            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -115,7 +124,6 @@ const EditForm = ({
           <Controller
             control={control}
             name="description"
-            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -139,7 +147,6 @@ const EditForm = ({
           <Controller
             control={control}
             name="projectName"
-            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -167,7 +174,6 @@ const EditForm = ({
           <Controller
             control={control}
             name="assignedTo"
-            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -195,10 +201,9 @@ const EditForm = ({
           <Controller
             control={control}
             name="priority"
-            defaultValue=""
             rules={{
               required: true,
-              minLength: 4,
+              minLength: 3,
             }}
             render={(props) => (
               <Group>
@@ -236,7 +241,6 @@ const EditForm = ({
           <Controller
             control={control}
             name="status"
-            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -281,7 +285,6 @@ const EditForm = ({
               required: true,
               minLength: 4,
             }}
-            defaultValue=""
             render={(props) => (
               <Group>
                 <Form.Label>Type</Form.Label>
