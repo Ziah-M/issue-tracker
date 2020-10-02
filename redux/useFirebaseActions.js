@@ -94,13 +94,19 @@ const useFirebaseActions = () => {
     };
   };
 
-  const addTicketComment = (ticketId, data) => {
+  const addTicketComment = (ticketId, comment) => {
     return (dispatch) => {
+      const newComment = {
+        submitter: authUser.name,
+        comment,
+        created: getTimestamp(),
+      };
+
       if (isDemo) {
         console.log("DISPATCHING DEMO ADD COMMENT TO TICKET");
-        dispatch(actions.addTicketComment(ticketId, data));
+        dispatch(actions.addTicketComment(ticketId, newComment));
       } else {
-        pushToDb(`tickets/${ticketId}/comments`, data);
+        pushToDb(`tickets/${ticketId}/comments`, newComment);
         return;
       }
     };
