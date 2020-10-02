@@ -1,16 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { FirebaseContext } from "../../Firebase";
-import { useCheckForDemo } from "../../Session";
 
 const usePush = () => {
   const [addDetails, setAddDetails] = useState({});
   const firebase = useContext(FirebaseContext);
-  const isDemo = useCheckForDemo();
-  const dispatch = useDispatch();
 
-  const add = (path = "", newData = {}, action = (f) => f ) => {
-    console.log("ABOUT TO TRIGGER FIREBASE PUSH",newData)
+  const add = (path = "", newData = {}) => {
+    console.log("ABOUT TO TRIGGER FIREBASE PUSH", newData);
     if (!!path && !!newData) {
       setAddDetails({
         path: path,

@@ -2,17 +2,17 @@ import React from "react";
 import {
   Button as UnstyledButton,
   Form as UnstyledForm,
-  NavLink as Link
+  NavLink as Link,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { PATHS } from "../../Firebase";
-import { useUpdate } from "../../Hooks";
+import useFirebaseActions from "../../redux/useFirebaseActions";
 
 const EditForm = ({ project }) => {
   const { register, handleSubmit, errors } = useForm();
-  const update = useUpdate();
+  const dispatch = useDispatch();
+  const { editProject } = useFirebaseActions();
 
   const users = useSelector((store) => store.users);
   const projects = useSelector((store) => store.projects);
@@ -24,7 +24,7 @@ const EditForm = ({ project }) => {
         alteredData = { ...alteredData, [key]: data[key] };
       }
     });
-    update(PATHS.PROJECT(project["uid"]), alteredData);
+    dispatch(editProject(project["uid"], alteredData));
   };
 
   return (

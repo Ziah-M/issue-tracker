@@ -1,8 +1,6 @@
 import React from "react";
-import { Card } from "../../Components";
-import styled from "styled-components";
-import { CardTable } from "../../Components";
 import { Button } from "react-bootstrap";
+import { CardTable } from "../../Components";
 
 const UsersTable = ({
   users,
@@ -20,7 +18,7 @@ const UsersTable = ({
           <Button
             variant="danger"
             size="sm"
-            onClick={() => remove(user.uid, projectId)}
+            onClick={() => remove(projectId, user.uid)}
           >
             Remove
           </Button>
@@ -28,7 +26,7 @@ const UsersTable = ({
           <Button
             variant="success"
             size="sm"
-            onClick={() => add(user.uid, projectId)}
+            onClick={() => add(projectId, user.uid)}
           >
             Add
           </Button>

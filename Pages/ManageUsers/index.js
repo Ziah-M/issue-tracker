@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Card, ContentArea } from "../../Components";
 import { convertObjectToList } from "../../Helpers";
-import { useRemove, useSet } from "../../Hooks";
+import useFirebaseActions from "../../redux/useFirebaseActions";
 import UsersTable from "./UsersTable";
 
 const ManageUsers = (props) => {
@@ -12,17 +12,16 @@ const ManageUsers = (props) => {
   const projectsArray = convertObjectToList(projects);
   const usersArray = convertObjectToList(users);
 
-  console.log('USERS ARE',users)
+  console.log("USERS ARE", users);
+  const dispatch = useDispatch();
+  const { addProjectUser, removeProjectUser } = useFirebaseActions();
 
-  const add = useSet();
-  const remove = useRemove();
-
-  const addUserToProjet = (userId, projectId) => {
-    add(`projects/${projectId}/personnel/${userId}`);
+  const addUserToProjet = (projectId, userId) => {
+    dispatch(addProjectUser(projectId, userId));
   };
 
-  const removeUserFromProject = (userId, projectId) => {
-    remove(`projects/${projectId}/personnel/${userId}`);
+  const removeUserFromProject = (projectId, userId) => {
+    dispatch(removeProjectUser(projectId, userId));
   };
 
   return (
