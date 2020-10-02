@@ -4,7 +4,7 @@ import {
   Col,
   Form,
   Modal,
-  NavLink as Link
+  NavLink as Link,
 } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -91,6 +91,7 @@ const EditForm = ({
           <Controller
             control={control}
             name="title"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -114,6 +115,7 @@ const EditForm = ({
           <Controller
             control={control}
             name="description"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
@@ -137,11 +139,11 @@ const EditForm = ({
           <Controller
             control={control}
             name="projectName"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
             }}
-            type="text"
             render={(props) => (
               <Group>
                 <Form.Label>Assigned To Project</Form.Label>
@@ -165,11 +167,11 @@ const EditForm = ({
           <Controller
             control={control}
             name="assignedTo"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
             }}
-            type="text"
             render={(props) => (
               <Group>
                 <Form.Label>Assigned To Developer</Form.Label>
@@ -193,11 +195,11 @@ const EditForm = ({
           <Controller
             control={control}
             name="priority"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
             }}
-            type="text"
             render={(props) => (
               <Group>
                 <Form.Label htmlFor="priority">Priority</Form.Label>
@@ -234,11 +236,11 @@ const EditForm = ({
           <Controller
             control={control}
             name="status"
+            defaultValue=""
             rules={{
               required: true,
               minLength: 4,
             }}
-            type="text"
             render={(props) => (
               <Group>
                 <Form.Label>Status</Form.Label>
@@ -279,7 +281,7 @@ const EditForm = ({
               required: true,
               minLength: 4,
             }}
-            type="text"
+            defaultValue=""
             render={(props) => (
               <Group>
                 <Form.Label>Type</Form.Label>

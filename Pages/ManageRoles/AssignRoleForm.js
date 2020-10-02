@@ -31,7 +31,11 @@ const AssignRoleForm = ({ users = [] }) => {
             <Controller
               control={control}
               name="selectedUser"
-              rules={{}}
+              rules={{
+                required: true,
+                minLength: 4,
+                maxLength: 50,
+              }}
               defaultValue={users[0] && users[0].uid}
               render={(props) => (
                 <Group>
@@ -52,7 +56,11 @@ const AssignRoleForm = ({ users = [] }) => {
             <Controller
               control={control}
               name="selectedRole"
-              rules={{}}
+              rules={{
+                required: true,
+                minLength: 4,
+                maxLength: 50,
+              }}
               defaultValue="Project Manager"
               render={(props) => (
                 <Group>
