@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { convertObjectToList } from "../Helpers";
 import useFirebaseActions from "../redux/useFirebaseActions";
+import { useParams } from "react-router";
 
 const AddTicketModal = ({
   handleShow,
@@ -75,6 +76,8 @@ const EditForm = ({
     },
   });
 
+  const { id: idOfTicketBeingEdited } = useParams();
+
   const dispatch = useDispatch();
   const { addTicket, editTicket } = useFirebaseActions();
 
@@ -89,7 +92,7 @@ const EditForm = ({
     if (!isEdit) {
       dispatch(addTicket(data));
     } else {
-      dispatch(editTicket(prefillData.uid, data));
+      dispatch(editTicket(idOfTicketBeingEdited, data));
     }
     handleClose();
   };
@@ -102,7 +105,7 @@ const EditForm = ({
             control={control}
             name="title"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
               maxLength: 25,
             }}
@@ -125,7 +128,7 @@ const EditForm = ({
             control={control}
             name="description"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
               maxLength: 50,
             }}
@@ -148,7 +151,7 @@ const EditForm = ({
             control={control}
             name="projectName"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
             }}
             render={(props) => (
@@ -175,7 +178,7 @@ const EditForm = ({
             control={control}
             name="assignedTo"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
             }}
             render={(props) => (
@@ -202,7 +205,7 @@ const EditForm = ({
             control={control}
             name="priority"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 3,
             }}
             render={(props) => (
@@ -242,7 +245,7 @@ const EditForm = ({
             control={control}
             name="status"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
             }}
             render={(props) => (
@@ -282,7 +285,7 @@ const EditForm = ({
             control={control}
             name="type"
             rules={{
-              required: true,
+              required: isEdit ? false : true,
               minLength: 4,
             }}
             render={(props) => (

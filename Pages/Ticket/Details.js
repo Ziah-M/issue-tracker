@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Details = ({
   ticket: {
-    assignedDev = "",
+    assignedTo = "",
     submitter = "",
     projectName = "",
     priority = "",
@@ -18,7 +18,7 @@ const Details = ({
     <Card title={`Details`} description="All Tickets | Edit Tickets">
       <Row>
         <Col>
-          <Detail title="Assigned To" info={assignedDev}></Detail>
+          <Detail title="Assigned To" info={assignedTo}></Detail>
         </Col>
         <Col>
           <Detail title="Submitter" info={submitter}></Detail>

@@ -11,13 +11,13 @@ const MyTickets = () => {
 
   const ticketsArray = convertObjectToList(tickets);
 
-  console.log(ticketsArray)
+  console.log(ticketsArray);
 
   const sortedTickets = ticketsArray.map((ticket) => {
     const {
       title,
       projectName,
-      assignedDev,
+      assignedTo,
       priority,
       status,
       type,
@@ -28,7 +28,7 @@ const MyTickets = () => {
     return [
       title,
       projectName,
-      assignedDev,
+      assignedTo,
       priority,
       status,
       type,

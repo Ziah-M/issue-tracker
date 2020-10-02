@@ -1,4 +1,4 @@
-import { useCheckForDemo } from "../Session";
+import { useCheckForDemo, useAuthUser } from "../Session";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as actions from "./actions";
@@ -18,8 +18,20 @@ const getTimestamp = () => {
   return d;
 };
 
+const removeFalseyValuesFromObject = (obj) => {
+  let updatedData = {};
+  Object.keys(obj).map((key) => {
+    if (!!obj[key]) {
+      updatedData[key] = obj[key];
+    }
+  });
+
+  return updatedData;
+};
+
 const useFirebaseActions = () => {
   const isDemo = useCheckForDemo();
+  const authUser = useAuthUser();
 
   // FIREBASE CRUD HOOKS
   const pushToDb = usePush();
@@ -31,7 +43,12 @@ const useFirebaseActions = () => {
   // ----            TICKETS            ----
   const addTicket = (data) => {
     return (dispatch, getState) => {
-      const ticket = { ...data, created: getTimestamp() };
+      const ticket = {
+        ...data,
+        created: getTimestamp(),
+        submitter: authUser.name(),
+      };
+
       if (isDemo) {
         console.log("DISPATCHING DEMO ADD TICKET");
         dispatch(actions.addTicket(ticket));
@@ -42,13 +59,20 @@ const useFirebaseActions = () => {
     };
   };
 
-  const editTicket = (id, details) => {
+  const editTicket = (id, data) => {
     return (dispatch) => {
+      const updatedData = removeFalseyValuesFromObject(data);
+
+      const ticket = {
+        ...updatedData,
+        updated: getTimestamp(),
+      };
+
       if (isDemo) {
         console.log("DISPATCHING DEMO EDIT TICKET");
-        dispatch(actions.editTicket(id, details));
+        dispatch(actions.editTicket(id, ticket));
       } else {
-        updateDb(`tickets/${id}`, details);
+        updateDb(`tickets/${id}`, ticket);
         return;
       }
     };
