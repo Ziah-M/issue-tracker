@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import * as ROUTES from "../../routes";
-import { withFirebase } from "../../Firebase";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import * as ROUTES from '../../routes'
+import { withFirebase } from '../../Firebase'
+import { Link } from 'react-router-dom'
 
 const PasswordForgotPage = () => {
   return (
@@ -9,43 +9,43 @@ const PasswordForgotPage = () => {
       <h1>Forgot Password</h1>
       <PasswordForgotForm />
     </div>
-  );
-};
+  )
+}
 
 const INITIAL_STATE = {
-  email: "",
+  email: '',
   error: null,
-};
+}
 
 class PasswordForgotFormBase extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE }
   }
 
   onSubmit = (event) => {
-    const { email } = this.state;
+    const { email } = this.state
     this.props.firebase // Provided by withFirebase HOC
       .doPasswordReset(email)
       .then((authUser) => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState({ ...INITIAL_STATE })
       })
-      .catch((error) => this.setState({ error }));
+      .catch((error) => this.setState({ error }))
 
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value, // Computed property name to make this method reusable for multiple onChange events
-    });
-  };
+    })
+  }
 
   render() {
-    const { email, error } = this.state;
+    const { email, error } = this.state
 
-    const isInvalid = email === "";
+    const isInvalid = email === ''
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -62,7 +62,7 @@ class PasswordForgotFormBase extends Component {
 
         {error && <p>{error.message}</p>}
       </form>
-    );
+    )
   }
 }
 
@@ -70,10 +70,10 @@ const PasswordForgotLink = () => (
   <p>
     <Link to={ROUTES.FORGOT_PASSWORD}>Forgot Password?</Link>
   </p>
-);
+)
 
-const PasswordForgotForm = withFirebase(PasswordForgotFormBase); // provide firebase
+const PasswordForgotForm = withFirebase(PasswordForgotFormBase) // provide firebase
 
-export default PasswordForgotPage;
+export default PasswordForgotPage
 
-export { PasswordForgotForm, PasswordForgotLink };
+export { PasswordForgotForm, PasswordForgotLink }

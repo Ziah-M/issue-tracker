@@ -1,31 +1,31 @@
-import React from "react";
+import React from 'react'
 import {
   Button as UnstyledButton,
   Form as UnstyledForm,
   NavLink as Link,
-} from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import useFirebaseActions from "../../redux/useFirebaseActions";
+} from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+import useFirebaseActions from '../../redux/useFirebaseActions'
 
 const EditForm = ({ project }) => {
-  const { register, handleSubmit, errors } = useForm();
-  const dispatch = useDispatch();
-  const { editProject } = useFirebaseActions();
+  const { register, handleSubmit, errors } = useForm()
+  const dispatch = useDispatch()
+  const { editProject } = useFirebaseActions()
 
-  const users = useSelector((store) => store.users);
-  const projects = useSelector((store) => store.projects);
+  const users = useSelector((store) => store.users)
+  const projects = useSelector((store) => store.projects)
 
   const onSubmit = (data) => {
-    let alteredData = {};
+    let alteredData = {}
     Object.keys(data).map((key) => {
-      if (!!data[key]) {
-        alteredData = { ...alteredData, [key]: data[key] };
+      if (data[key]) {
+        alteredData = { ...alteredData, [key]: data[key] }
       }
-    });
-    dispatch(editProject(project["uid"], alteredData));
-  };
+    })
+    dispatch(editProject(project.uid, alteredData))
+  }
 
   return (
     <Wrapper>
@@ -63,17 +63,17 @@ const EditForm = ({ project }) => {
         </Footer>
       </form>
     </Wrapper>
-  );
-};
+  )
+}
 
-const Label = styled(UnstyledForm.Label)``;
+const Label = styled(UnstyledForm.Label)``
 
-const Button = styled(UnstyledButton)``;
+const Button = styled(UnstyledButton)``
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-`;
+`
 
 const Footer = styled.div`
   width: 100%;
@@ -81,6 +81,6 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
+`
 
-export default EditForm;
+export default EditForm

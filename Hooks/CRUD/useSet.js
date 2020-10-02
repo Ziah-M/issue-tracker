@@ -1,34 +1,34 @@
-import { useContext, useEffect, useState } from "react";
-import { FirebaseContext } from "../../Firebase";
+import { useContext, useEffect, useState } from 'react'
+import { FirebaseContext } from '../../Firebase'
 
 const useSet = () => {
-  const [addDetails, setAddDetails] = useState({});
-  const firebase = useContext(FirebaseContext);
+  const [addDetails, setAddDetails] = useState({})
+  const firebase = useContext(FirebaseContext)
 
-  const add = (path = "", newData = {}) => {
-    if (!!path) {
+  const add = (path = '', newData = {}) => {
+    if (path) {
       setAddDetails({
-        path: path,
-      });
+        path,
+      })
     } else {
-      console.log("Set data failed: Did not provide a valid path");
+      console.log('Set data failed: Did not provide a valid path')
     }
-  };
+  }
 
   useEffect(() => {
-    const { path } = addDetails;
-    console.log("PATH  ", path);
+    const { path } = addDetails
+    console.log('PATH  ', path)
 
-    if (!!path) {
+    if (path) {
       firebase
         .ref(path)
         .set(1)
         .then(() => console.log(`set successful for firebase at ${path}`))
-        .catch(() => console.log(`set failed at ${path}`));
+        .catch(() => console.log(`set failed at ${path}`))
     }
-  }, [addDetails]);
+  }, [addDetails])
 
-  return add;
-};
+  return add
+}
 
-export default useSet;
+export default useSet

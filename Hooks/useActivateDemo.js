@@ -1,19 +1,19 @@
-import { useAuthUser } from "../Session";
-import { useEffect } from "react";
-import { demoData } from "../Data";
+import { useEffect } from 'react'
+import { useAuthUser } from '../Session'
+import { demoData } from '../Data'
 
 const useActivateDemo = () => {
-  const user = useAuthUser();
+  const user = useAuthUser()
 
   useEffect(() => {
-    if (user && user.role === "DEMO") {
-      const cache = localStorage.getItem("demo-data");
+    if (user && user.role === 'DEMO') {
+      const cache = localStorage.getItem('demo-data')
 
-      if (!!cache) {
-        localStorage.setItem("demo-data", JSON.stringify(demoData));
+      if (cache) {
+        localStorage.setItem('demo-data', JSON.stringify(demoData))
       }
     }
-  }, [user]);
-};
+  }, [user])
+}
 
-export default useActivateDemo;
+export default useActivateDemo

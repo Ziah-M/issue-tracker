@@ -1,9 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-const ContentArea = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
-};
+const ContentArea = ({ children }) => <Wrapper>{children}</Wrapper>
 
 const Wrapper = styled.div`
   width: 100%;
@@ -12,6 +10,6 @@ const Wrapper = styled.div`
   min-height: 100vh;
   background: lightgrey;
   padding: 40px 20px;
-`;
+`
 
-export default ContentArea;
+export default ContentArea

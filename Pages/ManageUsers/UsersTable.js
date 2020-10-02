@@ -1,25 +1,22 @@
-import React from "react";
-import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { CardTable } from "../../Components";
-import useFirebaseActions from "../../redux/useFirebaseActions";
+import React from 'react'
+import { Button } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { CardTable } from '../../Components'
+import useFirebaseActions from '../../redux/useFirebaseActions'
 
-const UsersTable = ({
-  users,
-  projectId,
-}) => {
-  const dispatch = useDispatch();
-  const { addProjectUser, removeProjectUser } = useFirebaseActions();
+const UsersTable = ({ users, projectId }) => {
+  const dispatch = useDispatch()
+  const { addProjectUser, removeProjectUser } = useFirebaseActions()
 
   const add = (projectId, userId) => {
-    dispatch(addProjectUser(projectId, userId));
-  };
+    dispatch(addProjectUser(projectId, userId))
+  }
 
   const remove = (projectId, userId) => {
-    dispatch(removeProjectUser(projectId, userId));
-  };
+    dispatch(removeProjectUser(projectId, userId))
+  }
 
-  const headings = ["User", "Role", " "];
+  const headings = ['User', 'Role', ' ']
   const rows = users
     ? users.map((user) => [
         user.name,
@@ -42,9 +39,9 @@ const UsersTable = ({
           </Button>
         ),
       ])
-    : [[]];
+    : [[]]
 
-  return <CardTable headings={headings} rows={rows} />;
-};
+  return <CardTable headings={headings} rows={rows} />
+}
 
-export default UsersTable;
+export default UsersTable

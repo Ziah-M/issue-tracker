@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import styled from "styled-components";
-import { AddTicketModal, ContentArea } from "../../Components";
-import Attachment from "./Attachment";
-import Comments from "./Comments";
-import Details from "./Details";
-import History from "./History";
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
+import styled from 'styled-components'
+import { AddTicketModal, ContentArea } from '../../Components'
+import Attachment from './Attachment'
+import Comments from './Comments'
+import Details from './Details'
+import History from './History'
 
 const Ticket = () => {
-  const { id } = useParams();
-  const ticket = useSelector((store) => store.tickets[id]);
+  const { id } = useParams()
+  const ticket = useSelector((store) => store.tickets[id])
 
-  const [showAddTicket, setShowAddTicket] = useState(false);
-  const handleCloseAddTicket = () => setShowAddTicket(false);
-  const handleShowAddTicket = () => setShowAddTicket(true);
+  const [showAddTicket, setShowAddTicket] = useState(false)
+  const handleCloseAddTicket = () => setShowAddTicket(false)
+  const handleShowAddTicket = () => setShowAddTicket(true)
 
   return (
     <ContentArea>
@@ -44,8 +44,8 @@ const Ticket = () => {
         </Wrapper>
       )}
     </ContentArea>
-  );
-};
+  )
+}
 
 const Section = styled.div`
   width: 50%;
@@ -53,15 +53,15 @@ const Section = styled.div`
   margin-bottom: 50px;
   height: auto;
   min-height: 50px;
-`;
+`
 
 const Modal = styled.div`
   /* DISPLAY IF ROUTE HAS /edit */
-`;
+`
 
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-`;
+`
 
-export default Ticket;
+export default Ticket

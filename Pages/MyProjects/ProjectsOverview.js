@@ -1,11 +1,5 @@
 import React from 'react'
 
-const ProjectsOverview = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+const ProjectsOverview = () => <div></div>
 
 export default ProjectsOverview

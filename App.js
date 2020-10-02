@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { AddTicketModal, Navbar, Sidebar } from "./Components";
-import { useFirebaseListener } from "./Hooks";
-import useActivateDemo from "./Hooks/useActivateDemo";
-import RouterSwitch from "./RouterSwitch";
-import { withAuthentication } from "./Session";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { AddTicketModal, Navbar, Sidebar } from './Components'
+import { useFirebaseListener } from './Hooks'
+import useActivateDemo from './Hooks/useActivateDemo'
+import RouterSwitch from './RouterSwitch'
+import { withAuthentication } from './Session'
 
 const App = () => {
-  const [showAddTicket, setShowAddTicket] = useState(false);
-  const handleCloseAddTicket = () => setShowAddTicket(false);
-  const handleShowAddTicket = () => setShowAddTicket(true);
+  const [showAddTicket, setShowAddTicket] = useState(false)
+  const handleCloseAddTicket = () => setShowAddTicket(false)
+  const handleShowAddTicket = () => setShowAddTicket(true)
 
-  useActivateDemo();
-  useFirebaseListener();
+  useActivateDemo()
+  useFirebaseListener()
 
   return (
     <Wrapper>
@@ -28,21 +28,21 @@ const App = () => {
         isEdit={false}
       />
     </Wrapper>
-  );
-};
+  )
+}
 
 const Wrapper = styled.div`
   min-height: 100vh;
   width: 100%;
 
   display: flex;
-`;
+`
 
 const Inner = styled.div`
   display: flex;
   width: 100%;
   max-width: 100%;
   flex-direction: column;
-`;
+`
 
-export default withAuthentication(App);
+export default withAuthentication(App)

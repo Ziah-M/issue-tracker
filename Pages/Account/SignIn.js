@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
-import * as ROUTES from "../../routes";
-import { withFirebase } from "../../Firebase";
-import { compose } from "recompose";
-import { SignUpLink } from "./SignUpForm";
-import { PasswordForgotLink } from "./ForgotPassword";
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import * as ROUTES from '../../routes'
+import { withFirebase } from '../../Firebase'
+import { compose } from 'recompose'
+import { SignUpLink } from './SignUpForm'
+import { PasswordForgotLink } from './ForgotPassword'
 import SignOutButton from './SignOut'
 
 const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null
-};
+  email: '',
+  password: '',
+  error: null,
+}
 
 const ERROR_CODE_ACCOUNT_EXISTS =
-  "auth/account-exists-with-different-credential";
+  'auth/account-exists-with-different-credential'
 
 const ERROR_MSG_ACCOUNT_EXISTS = `
   An account with an E-Mail address to
 this social account already exists. Try to login from
 this account instead and associate your social accounts on
 your personal account page.
-  `;
+  `
 
 const SignInPage = () => {
   return (
@@ -32,40 +32,40 @@ const SignInPage = () => {
       <PasswordForgotLink />
       <SignUpLink />
       <SignOutButton />
-      </div>
-  );
-};
+    </div>
+  )
+}
 
 class SignInFormBase extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE }
   }
 
-  onSubmit = event => {
-    const { email, password } = this.state;
+  onSubmit = (event) => {
+    const { email, password } = this.state
     this.props.firebase // Provided by withFirebase HOC
       .doSignInWithEmailAndPassword(email, password)
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.LANDING); // Uses withRouter HOC
+      .then((authUser) => {
+        this.setState({ ...INITIAL_STATE })
+        this.props.history.push(ROUTES.LANDING) // Uses withRouter HOC
       })
-      .catch(error => this.setState({ error }));
+      .catch((error) => this.setState({ error }))
 
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value // Computed property name to make this method reusable for multiple onChange events
-    });
-  };
+      [event.target.name]: event.target.value, // Computed property name to make this method reusable for multiple onChange events
+    })
+  }
 
   render() {
-    const { email, password, error } = this.state;
+    const { email, password, error } = this.state
 
-    const isInvalid = password === "" || email === "";
+    const isInvalid = password === '' || email === ''
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -89,47 +89,47 @@ class SignInFormBase extends Component {
 
         {error && <p>{error.message}</p>}
       </form>
-    );
+    )
   }
 }
 
 class SignInGoogleBase extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      error: null
-    };
+      error: null,
+    }
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     this.props.firebase
       .doSignInWithGoogle()
-      .then(socialAuthUser => {
+      .then((socialAuthUser) => {
         return this.props.firebase.user(socialAuthUser.user.uid).set({
           username: socialAuthUser.user.displayName,
           email: socialAuthUser.user.email,
-          roles: {}
-        });
+          roles: {},
+        })
       })
       .then(() => {
-        this.setState({ error: null });
-        this.props.history.push(ROUTES.HOME);
+        this.setState({ error: null })
+        this.props.history.push(ROUTES.HOME)
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           // display customer error message
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
+          error.message = ERROR_MSG_ACCOUNT_EXISTS
         }
 
-        this.setState({ error });
-      });
+        this.setState({ error })
+      })
 
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   render() {
-    const { error } = this.state;
+    const { error } = this.state
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -137,13 +137,13 @@ class SignInGoogleBase extends Component {
 
         {error && <p>{error.message}</p>}
       </form>
-    );
+    )
   }
 }
 
 // Creating HOC
-const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
-const SignInGoogle = compose(withRouter, withFirebase)(SignInGoogleBase);
+const SignInForm = compose(withRouter, withFirebase)(SignInFormBase)
+const SignInGoogle = compose(withRouter, withFirebase)(SignInGoogleBase)
 
-export default SignInPage;
-export { SignInForm, SignInGoogle };
+export default SignInPage
+export { SignInForm, SignInGoogle }

@@ -1,27 +1,27 @@
-import React from "react";
+import React from 'react'
 import {
   Form as UnstyledForm,
   Button as UnstyledButton,
   NavLink as Link,
   Col,
-} from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import useFirebaseActions from "../../redux/useFirebaseActions";
+} from 'react-bootstrap'
+import { useForm, Controller } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import useFirebaseActions from '../../redux/useFirebaseActions'
 
 const AssignRoleForm = ({ users = [] }) => {
-  const { register, control, handleSubmit, errors } = useForm();
+  const { register, control, handleSubmit, errors } = useForm()
 
-  const dispatch = useDispatch();
-  const { editUserRole } = useFirebaseActions();
+  const dispatch = useDispatch()
+  const { editUserRole } = useFirebaseActions()
 
   const onSubmit = (data) => {
-    const { selectedUser, selectedRole } = data;
+    const { selectedUser, selectedRole } = data
     if (selectedUser && selectedRole) {
-      dispatch(editUserRole(selectedUser, selectedRole));
+      dispatch(editUserRole(selectedUser, selectedRole))
     }
-  };
+  }
 
   return (
     <Wrapper>
@@ -79,21 +79,21 @@ const AssignRoleForm = ({ users = [] }) => {
             </Button>
           </Footer>
         </Form>
-      )}{" "}
+      )}{' '}
     </Wrapper>
-  );
-};
+  )
+}
 
-const Form = styled(UnstyledForm)``;
+const Form = styled(UnstyledForm)``
 
-const Group = styled(Form.Group)``;
+const Group = styled(Form.Group)``
 
-const Button = styled(UnstyledButton)``;
+const Button = styled(UnstyledButton)``
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-`;
+`
 
 const Footer = styled.div`
   width: 100%;
@@ -101,6 +101,6 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
-export default AssignRoleForm;
+export default AssignRoleForm

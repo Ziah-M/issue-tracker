@@ -1,24 +1,24 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
-import { FIREBASE_CONFIG } from "../private";
+import app from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
+import { FIREBASE_CONFIG } from '../private'
 const DOMAIN_URL =
-  process.env.NODE_ENV !== "production"
-    ? "http://localhost:3000"
-    : "http://zm-portfolio.web.app";
+  process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:3000'
+    : 'http://zm-portfolio.web.app'
 
-const REACT_APP_CONFIRMATION_EMAIL_REDIRECT = DOMAIN_URL;
+const REACT_APP_CONFIRMATION_EMAIL_REDIRECT = DOMAIN_URL
 
 class Firebase {
   constructor() {
-    app.initializeApp(FIREBASE_CONFIG);
-    this.auth = app.auth();
-    this.db = app.database();
+    app.initializeApp(FIREBASE_CONFIG)
+    this.auth = app.auth()
+    this.db = app.database()
 
-    this.serverValue = app.database.ServerValue;
+    this.serverValue = app.database.ServerValue
 
-    this.emailAuthProvider = app.auth.EmailAuthProvider;
-    this.googleProvider = new app.auth.GoogleAuthProvider();
+    this.emailAuthProvider = app.auth.EmailAuthProvider
+    this.googleProvider = new app.auth.GoogleAuthProvider()
   }
 
   /* ------------------------------------------------------------------ */
@@ -30,12 +30,12 @@ class Firebase {
     this.auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         this.user(authUser.uid)
-          .once("value")
+          .once('value')
           .then((snapshot) => {
-            const dbUser = snapshot.val() || {};
+            const dbUser = snapshot.val() || {}
 
             if (!dbUser.roles) {
-              dbUser.roles = {};
+              dbUser.roles = {}
             }
 
             // merge auth and db user
@@ -46,47 +46,47 @@ class Firebase {
               emailVerified: authUser.emailVerified,
               providerData: authUser.providerData,
               ...dbUser,
-            };
+            }
 
-            next(authUser);
-          });
+            next(authUser)
+          })
       } else {
-        fallback();
+        fallback()
       }
-    });
+    })
 
   doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
+    this.auth.createUserWithEmailAndPassword(email, password)
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
+    this.auth.signInWithEmailAndPassword(email, password)
 
   doSendEmailVerification = () =>
     this.auth.currentUser.sendEmailVerification({
       url: REACT_APP_CONFIRMATION_EMAIL_REDIRECT, //Optional redirect url after email is confirmed
-    });
+    })
 
-  doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider);
+  doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider)
 
   doSignOut = () => {
-    this.auth.signOut();
-  };
+    this.auth.signOut()
+  }
 
-  doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email)
 
   doPasswordUpdate = (password) =>
-    this.auth.currentUser.updatePassword(password);
+    this.auth.currentUser.updatePassword(password)
 
   // *** --- USERS IN REALTIME DATABASE --- ***
-  user = (uid) => this.db.ref(`users/${uid}`);
-  users = () => this.db.ref("users");
+  user = (uid) => this.db.ref(`users/${uid}`)
+  users = () => this.db.ref('users')
 
   /* ------------------------------------------------------------------ */
   /* --------------------------- API ENDPOINTS ------------------------- */
   /* ------------------------------------------------------------------ */
   // Returns the ref to the data found at path
   // e.g. id = 1, path = `tickets/${id}`
-  ref = (path) => this.db.ref(`${path}`);
+  ref = (path) => this.db.ref(`${path}`)
 
   /* ------------------------------------------------------------------ */
   /* --------------------------- CRUD OPERATIONS ------------------------- */
@@ -94,34 +94,34 @@ class Firebase {
 
   getTickets = () =>
     this.tickets()
-      .once("value")
+      .once('value')
       .then((snapshot) => {
-        return snapshot.val();
-      });
+        return snapshot.val()
+      })
   getTicket = (id) =>
     this.ticket(id)
-      .once("value")
+      .once('value')
       .then((snapshot) => {
-        return snapshot.val();
-      });
-  createTicket = (ticket) => this.tickets().push(ticket);
-  deleteTicket = (id) => this.ticket(id).remove();
-  updateTicket = (id, ticket) => this.ticket(id).update({ ...ticket });
+        return snapshot.val()
+      })
+  createTicket = (ticket) => this.tickets().push(ticket)
+  deleteTicket = (id) => this.ticket(id).remove()
+  updateTicket = (id, ticket) => this.ticket(id).update({ ...ticket })
 
   getProjects = () =>
     this.projects()
-      .once("value")
+      .once('value')
       .then((snapshot) => {
-        return snapshot.val();
-      });
+        return snapshot.val()
+      })
   getProject = (id) =>
     this.project(id)
-      .once("value")
+      .once('value')
       .then((snapshot) => {
-        return snapshot.val();
-      });
-  createProject = (project) => this.projects().push(project);
-  updateProject = (id, project) => this.project(id).update({ ...project });
-  deleteProject = (id) => this.project(id).remove();
+        return snapshot.val()
+      })
+  createProject = (project) => this.projects().push(project)
+  updateProject = (id, project) => this.project(id).update({ ...project })
+  deleteProject = (id) => this.project(id).remove()
 }
-export default Firebase;
+export default Firebase

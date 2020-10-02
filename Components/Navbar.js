@@ -1,16 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import {
-  Nav,
-  ListGroup,
-  FormControl as Control,
-  Button,
-} from "react-bootstrap";
-import * as ROUTES from "../routes";
-import { useAuthUser } from "../Session";
+import React from 'react'
+import styled from 'styled-components'
+import { Nav, ListGroup, FormControl as Control, Button } from 'react-bootstrap'
+import * as ROUTES from '../routes'
+import { useAuthUser } from '../Session'
 
 const Navbar = ({ setShowAddTicket }) => {
-  const authUser = useAuthUser();
+  const authUser = useAuthUser()
   return (
     <Wrapper>
       <List>
@@ -41,8 +36,8 @@ const Navbar = ({ setShowAddTicket }) => {
         </Li>
       </List>
     </Wrapper>
-  );
-};
+  )
+}
 
 const Wrapper = styled.div`
   min-height: 60px;
@@ -51,7 +46,7 @@ const Wrapper = styled.div`
   height: auto;
   background: blue;
   background: green;
-`;
+`
 
 const Li = styled(ListGroup.Item)`
   user-select: none;
@@ -60,12 +55,12 @@ const Li = styled(ListGroup.Item)`
   &:hover {
     background: #deb150;
   }
-`;
+`
 
 const List = styled(ListGroup)`
   display: flex;
   flex-direction: row;
-`;
+`
 
 const Link = styled(Nav.Link)`
   padding: 0;
@@ -76,6 +71,6 @@ const Link = styled(Nav.Link)`
     background-color: #deb150 !important;
     color: black;
   }
-`;
+`
 
-export default Navbar;
+export default Navbar

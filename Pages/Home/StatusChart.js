@@ -1,11 +1,5 @@
 import React from 'react'
 
-const StatusChart = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+const StatusChart = () => <div></div>
 
 export default StatusChart

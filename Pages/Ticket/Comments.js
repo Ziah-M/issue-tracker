@@ -1,53 +1,52 @@
-import React from "react";
-import { Card } from "../../Components";
-import styled from "styled-components";
-import { CardTable } from "../../Components";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { convertObjectToList } from "../../Helpers";
-import { useState } from "react";
-import { Form, Button, FormControl, Col, Row } from "react-bootstrap";
-import useFirebaseActions from "../../redux/useFirebaseActions";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { Form, Button, FormControl, Col, Row } from 'react-bootstrap'
+import { convertObjectToList } from '../../Helpers'
+
+import { CardTable, Card } from '../../Components'
+
+import useFirebaseActions from '../../redux/useFirebaseActions'
 
 const Comments = () => {
-  const { id: idInParams } = useParams();
+  const { id: idInParams } = useParams()
 
-  const comments = useSelector((state) => state.tickets[idInParams].comments);
-  const sortedByMostRecentComments = convertObjectToList(comments).reverse();
+  const comments = useSelector((state) => state.tickets[idInParams].comments)
+  const sortedByMostRecentComments = convertObjectToList(comments).reverse()
 
-  
-  const headings = ["Commenter", "Message", "Created"];
+  const headings = ['Commenter', 'Message', 'Created']
   const rows = sortedByMostRecentComments.map((row) => [
     row.submitter,
     row.comment,
     row.created,
-  ]);
-  
+  ])
+
   return (
     <Card
       title="Comments"
       description="Comments left on this ticket"
-      style={{ height: "auto" }}
+      style={{ height: 'auto' }}
     >
       <CardTable headings={headings} rows={rows} />
       <CommentInput />
     </Card>
-  );
-};
+  )
+}
 
 const CommentInput = (props) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('')
 
-  const { id: idInParams } = useParams();
-  const dispatch = useDispatch();
-  const { addTicketComment } = useFirebaseActions();
+  const { id: idInParams } = useParams()
+  const dispatch = useDispatch()
+  const { addTicketComment } = useFirebaseActions()
 
-  const handleChange = (event) => {};
+  const handleChange = (event) => {}
 
   const handleSubmit = () => {
-    dispatch(addTicketComment(idInParams, value));
-    setValue("");
-  };
+    dispatch(addTicketComment(idInParams, value))
+    setValue('')
+  }
 
   return (
     <WrapperInput>
@@ -76,11 +75,11 @@ const CommentInput = (props) => {
         </Form.Group>
       </Form>
     </WrapperInput>
-  );
-};
+  )
+}
 
 const WrapperInput = styled.div`
   width: 100%;
-`;
+`
 
-export default Comments;
+export default Comments

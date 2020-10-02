@@ -1,8 +1,8 @@
-import React from "react";
-import { Card, CardTable } from "../../Components";
+import React from 'react'
+import { Card, CardTable } from '../../Components'
 
 const TicketsOverview = ({ tickets }) => {
-  const headings = ["Title", "Submitter", "Developer", "Status", "Created", ""];
+  const headings = ['Title', 'Submitter', 'Developer', 'Status', 'Created', '']
   const rows = tickets
     ? tickets.map((ticket) => [
         ticket.title,
@@ -11,7 +11,7 @@ const TicketsOverview = ({ tickets }) => {
         ticket.status,
         ticket.created,
       ])
-    : [[]];
+    : [[]]
 
   return (
     <Card
@@ -20,7 +20,7 @@ const TicketsOverview = ({ tickets }) => {
     >
       <CardTable headings={headings} rows={rows} />
     </Card>
-  );
-};
+  )
+}
 
-export default TicketsOverview;
+export default TicketsOverview

@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
-import useAuthUser from "./useAuthUser";
+import { useState, useEffect } from 'react'
+import useAuthUser from './useAuthUser'
 
 const useCheckForDemo = () => {
-  const authUser = useAuthUser();
-  const [isDemo, setIsDemo] = useState(true);
+  const authUser = useAuthUser()
+  const [isDemo, setIsDemo] = useState(true)
 
   useEffect(() => {
     if (!authUser) {
-      setIsDemo(true);
+      setIsDemo(true)
     }
 
     if (authUser) {
-      if (authUser.role === "DEMO") {
-        setIsDemo(true);
+      if (authUser.role === 'DEMO') {
+        setIsDemo(true)
       }
 
-      if (authUser.role !== "DEMO") {
-        setIsDemo(false);
+      if (authUser.role !== 'DEMO') {
+        setIsDemo(false)
       }
     }
-  }, [authUser]);
+  }, [authUser])
 
-  return isDemo;
-};
+  return isDemo
+}
 
-export default useCheckForDemo;
+export default useCheckForDemo

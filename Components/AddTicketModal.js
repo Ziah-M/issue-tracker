@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react'
 import {
   Button as UnstyledButton,
   Col,
   Form,
   Modal,
   NavLink as Link,
-} from "react-bootstrap";
-import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { convertObjectToList } from "../Helpers";
-import useFirebaseActions from "../redux/useFirebaseActions";
-import { useParams } from "react-router";
+} from 'react-bootstrap'
+import { Controller, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+import { useParams } from 'react-router'
+import { convertObjectToList } from '../Helpers'
+import useFirebaseActions from '../redux/useFirebaseActions'
 
 const AddTicketModal = ({
   handleShow,
@@ -19,83 +19,81 @@ const AddTicketModal = ({
   show,
   isEdit = false,
   prefillData,
-}) => {
-  return (
-    <Modal
-      show={show}
-      onHide={handleClose}
-      centered
-      style={{ height: "auto", maxWidth: "90vw" }}
-    >
-      <Header closeButton>
-        <Title>{isEdit ? "Edit Ticket" : "Add Ticket"}</Title>
-      </Header>
-      <Modal.Body>
-        <EditForm
-          handleClose={handleClose}
-          isEdit={isEdit}
-          prefillData={prefillData}
-        />
-      </Modal.Body>
-    </Modal>
-  );
-};
+}) => (
+  <Modal
+    show={show}
+    onHide={handleClose}
+    centered
+    style={{ height: 'auto', maxWidth: '90vw' }}
+  >
+    <Header closeButton>
+      <Title>{isEdit ? 'Edit Ticket' : 'Add Ticket'}</Title>
+    </Header>
+    <Modal.Body>
+      <EditForm
+        handleClose={handleClose}
+        isEdit={isEdit}
+        prefillData={prefillData}
+      />
+    </Modal.Body>
+  </Modal>
+)
 
-const Header = styled(Modal.Header)``;
+const Header = styled(Modal.Header)``
 
 const Title = styled(Modal.Title)`
   text-align: center;
   width: 100%;
   color: #deb150;
   user-select: none;
-`;
+`
 
 const EditForm = ({
   handleClose = (f) => f,
   isEdit = false,
   prefillData = {
-    title: "",
-    description: "",
-    projectName: "",
-    assignedTo: "",
-    priority: "",
-    status: "",
-    type: "",
-    uid: "",
+    title: '',
+    description: '',
+    projectName: '',
+    assignedTo: '',
+    priority: '',
+    status: '',
+    type: '',
+    uid: '',
   },
 }) => {
   const { register, control, handleSubmit, errors } = useForm({
     defaultValues: {
-      title: "",
-      description: "",
-      projectName: "",
-      assignedTo: "",
-      status: "",
-      priority: "",
-      type: "",
+      title: '',
+      description: '',
+      projectName: '',
+      assignedTo: '',
+      status: '',
+      priority: '',
+      type: '',
     },
-  });
+  })
 
-  const { id: idOfTicketBeingEdited } = useParams();
+  const { id: idOfTicketBeingEdited } = useParams()
 
-  const dispatch = useDispatch();
-  const { addTicket, editTicket } = useFirebaseActions();
+  const dispatch = useDispatch()
+  const { addTicket, editTicket } = useFirebaseActions()
 
-  const projects = useSelector((store) => store.projects);
-  const users = useSelector((store) => store.users);
+  const projects = useSelector((store) => store.projects)
+  const users = useSelector((store) => store.users)
 
-  const projectsArray = convertObjectToList(projects);
-  const usersArray = convertObjectToList(users);
+  const projectsArray = convertObjectToList(projects)
+  const usersArray = convertObjectToList(users)
 
   const onSubmit = (data) => {
-    console.log("SUBMITTING FORM NOW");
+    console.log('SUBMITTING FORM NOW')
     if (!isEdit) {
-      dispatch(addTicket(data));
+      dispatch(addTicket(data))
     } else {
-      dispatch(editTicket(idOfTicketBeingEdited, data));
+      dispatch(editTicket(idOfTicketBeingEdited, data))
     }
-    handleClose();
-  };
+    handleClose()
+  }
 
   return (
     <Wrapper>
@@ -105,7 +103,7 @@ const EditForm = ({
             control={control}
             name="title"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
               maxLength: 25,
             }}
@@ -128,7 +126,7 @@ const EditForm = ({
             control={control}
             name="description"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
               maxLength: 50,
             }}
@@ -151,7 +149,7 @@ const EditForm = ({
             control={control}
             name="projectName"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
             }}
             render={(props) => (
@@ -178,7 +176,7 @@ const EditForm = ({
             control={control}
             name="assignedTo"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
             }}
             render={(props) => (
@@ -205,7 +203,7 @@ const EditForm = ({
             control={control}
             name="priority"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 3,
             }}
             render={(props) => (
@@ -215,22 +213,22 @@ const EditForm = ({
                   <option value=""></option>
                   <option
                     value="None"
-                    selected={prefillData.priority === "None"}
+                    selected={prefillData.priority === 'None'}
                   >
                     None
                   </option>
-                  <option value="Low" selected={prefillData.priority === "Low"}>
+                  <option value="Low" selected={prefillData.priority === 'Low'}>
                     Low
                   </option>
                   <option
                     value="Medium"
-                    selected={prefillData.priority === "Medium"}
+                    selected={prefillData.priority === 'Medium'}
                   >
                     Medium
                   </option>
                   <option
                     value="High"
-                    selected={prefillData.priority === "High"}
+                    selected={prefillData.priority === 'High'}
                   >
                     High
                   </option>
@@ -245,7 +243,7 @@ const EditForm = ({
             control={control}
             name="status"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
             }}
             render={(props) => (
@@ -253,24 +251,24 @@ const EditForm = ({
                 <Form.Label>Status</Form.Label>
                 <Form.Control {...props} as="select" id="status">
                   <option value=""></option>
-                  <option value="Open" selected={prefillData.status === "Open"}>
+                  <option value="Open" selected={prefillData.status === 'Open'}>
                     Open
                   </option>
                   <option
                     value="In Progress"
-                    selected={prefillData.status === "In Progress"}
+                    selected={prefillData.status === 'In Progress'}
                   >
                     In Progress
                   </option>
                   <option
                     value="Closed"
-                    selected={prefillData.status === "Closed"}
+                    selected={prefillData.status === 'Closed'}
                   >
                     Closed
                   </option>
                   <option
                     value="Additional Info Required"
-                    selected={prefillData.status === "Additional Info Required"}
+                    selected={prefillData.status === 'Additional Info Required'}
                   >
                     Additional Info Required
                   </option>
@@ -285,7 +283,7 @@ const EditForm = ({
             control={control}
             name="type"
             rules={{
-              required: isEdit ? false : true,
+              required: !isEdit,
               minLength: 4,
             }}
             render={(props) => (
@@ -295,27 +293,27 @@ const EditForm = ({
                   <option value=""></option>
                   <option
                     value="Feature Requests"
-                    selected={prefillData.type === "Feature Requests"}
+                    selected={prefillData.type === 'Feature Requests'}
                   >
                     Feature Requests
                   </option>
                   <option
                     value="Bugs / Errors"
-                    selected={prefillData.type === "Bugs / Errors"}
+                    selected={prefillData.type === 'Bugs / Errors'}
                   >
                     Bugs / Errors
                   </option>
                   <option
                     value="Training / Document Requests"
                     selected={
-                      prefillData.type === "Training / Document Requests"
+                      prefillData.type === 'Training / Document Requests'
                     }
                   >
                     Training / Document Requests
                   </option>
                   <option
                     value="Comments"
-                    selected={prefillData.type === "Comments"}
+                    selected={prefillData.type === 'Comments'}
                   >
                     Comments
                   </option>
@@ -333,15 +331,15 @@ const EditForm = ({
         </Footer>
       </Form>
     </Wrapper>
-  );
-};
+  )
+}
 
-const Button = styled(UnstyledButton)``;
+const Button = styled(UnstyledButton)``
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-`;
+`
 
 const Footer = styled.div`
   width: 100%;
@@ -349,10 +347,10 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
+`
 
-const Group = styled(Form.Group)``;
+const Group = styled(Form.Group)``
 
-const Control = styled(Form.Control)``;
+const Control = styled(Form.Control)``
 
-export default AddTicketModal;
+export default AddTicketModal
