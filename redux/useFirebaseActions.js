@@ -148,7 +148,9 @@ const useFirebaseActions = () => {
     console.log('EDIT ROLE:', userId, role)
     if (isDemo) {
       console.log('DISPATCHING DEMO EDIT USER ROLE')
-      dispatch(actions.editUserRole(userId))
+      const appendDemo = role.includes('DEMO') ? role : `DEMO_${role}`
+
+      dispatch(actions.editUserRole(userId, appendDemo))
     } else {
       const path = `users/${userId}`
       updateDb(path, { role })

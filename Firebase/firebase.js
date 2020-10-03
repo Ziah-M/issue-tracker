@@ -38,6 +38,9 @@ class Firebase {
               dbUser.roles = {}
             }
 
+            if(!dbUser.role)
+            dbUser.role='DEVELOPER'
+
             // merge auth and db user
 
             authUser = {

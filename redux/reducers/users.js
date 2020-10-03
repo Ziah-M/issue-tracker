@@ -5,7 +5,9 @@ import {
   TOGGLE_TICKET_ON_PROJECT,
 } from '../actionTypes'
 
-const INITIAL_STATE = {}
+import { usersInitialState } from '../initialState'
+
+const INITIAL_STATE = usersInitialState
 
 export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action

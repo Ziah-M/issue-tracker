@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AddTicketModal, Navbar, Sidebar } from './Components'
 import { useFirebaseListener } from './Hooks'
-import useActivateDemo from './Hooks/useActivateDemo'
 import RouterSwitch from './RouterSwitch'
 
 const App = () => {
@@ -10,7 +9,6 @@ const App = () => {
   const handleCloseAddTicket = () => setShowAddTicket(false)
   const handleShowAddTicket = () => setShowAddTicket(true)
 
-  useActivateDemo()
   useFirebaseListener()
 
   return (

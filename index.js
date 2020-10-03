@@ -13,8 +13,7 @@ const Index = () => {
   return (
     <Provider store={store}>
       {!authUser && <SignIn />}
-      {authUser && authUser.role === 'DEMO' && <App />}
-      {authUser && authUser.role !== 'DEMO' && <App />}
+      {authUser && <App />}
     </Provider>
   )
 }

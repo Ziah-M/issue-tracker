@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { useHistory } from 'react-router'
-import useAuthUser from './useAuthUser'
 import { FirebaseContext } from '../Firebase'
 import { SIGN_IN } from '../routes'
+import useAuthUser from './useAuthUser'
 
 const useLogout = () => {
   const { authUser, setAuthUser } = useAuthUser()
@@ -14,12 +14,12 @@ const useLogout = () => {
       console.log('already logged out')
     }
 
-    if (authUser && authUser.role === 'DEMO') {
+    if (authUser && authUser.role.includes('DEMO')) {
       localStorage.setItem('auth-demoIsActive', 'false')
       setAuthUser(null)
     }
 
-    if (authUser && authUser.role !== 'DEMO') {
+    if (authUser && !authUser.role.includes('DEMO')) {
       firebase.doSignOut()
     }
 

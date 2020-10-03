@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { editUserRole } from '../redux/actions'
 import useAuthUser from './useAuthUser'
 
 const useCheckForDemo = () => {
@@ -11,12 +12,14 @@ const useCheckForDemo = () => {
     }
 
     if (authUser) {
-      if (authUser.role === 'DEMO') {
+      if (authUser.role) {
+        if (!authUser.role.includes('DEMO')) {
+          setIsDemo(false)
+        } else {
+          setIsDemo(true)
+        }
+      } else {
         setIsDemo(true)
-      }
-
-      if (authUser.role !== 'DEMO') {
-        setIsDemo(false)
       }
     }
   }, [authUser])

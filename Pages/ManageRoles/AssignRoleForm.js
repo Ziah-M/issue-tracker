@@ -9,6 +9,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import useFirebaseActions from '../../redux/useFirebaseActions'
+import { ROLES } from '../../Data'
 
 const AssignRoleForm = ({ users = [] }) => {
   const { register, control, handleSubmit, errors } = useForm()
@@ -66,8 +67,9 @@ const AssignRoleForm = ({ users = [] }) => {
                 <Group>
                   <Form.Label>Choose a role to assign</Form.Label>
                   <Form.Control {...props} as="select" id="selectedRole">
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="PROJECT MANAGER">Project Manager</option>
+                    {ROLES.map((role = '', index) => (
+                      <Role value={role}>{role}</Role>
+                    ))}
                   </Form.Control>
                 </Group>
               )}
@@ -85,6 +87,10 @@ const AssignRoleForm = ({ users = [] }) => {
 }
 
 const Form = styled(UnstyledForm)``
+
+const Role = styled.option`
+  text-transform: capitalize;
+`
 
 const Group = styled(Form.Group)``
 
