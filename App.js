@@ -4,7 +4,6 @@ import { AddTicketModal, Navbar, Sidebar } from './Components'
 import { useFirebaseListener } from './Hooks'
 import useActivateDemo from './Hooks/useActivateDemo'
 import RouterSwitch from './RouterSwitch'
-import { withAuthentication } from './Session'
 
 const App = () => {
   const [showAddTicket, setShowAddTicket] = useState(false)
@@ -45,4 +44,4 @@ const Inner = styled.div`
   flex-direction: column;
 `
 
-export default withAuthentication(App)
+export default App

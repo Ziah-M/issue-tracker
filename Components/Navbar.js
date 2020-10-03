@@ -2,16 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import { Nav, ListGroup, FormControl as Control, Button } from 'react-bootstrap'
 import * as ROUTES from '../routes'
-import { useAuthUser } from '../Session'
+import { useAuthUser, useLogout } from '../Session'
 import { withFirebase } from '../Firebase'
+import {Link as UnstyledLink} from 'react-router-dom'
 
 const Navbar = ({ setShowAddTicket, firebase }) => {
-  const authUser = useAuthUser()
+  const { authUser } = useAuthUser()
+  const logout = useLogout()
+
   return (
     <Wrapper>
       <List>
         <Li>
-          <Link href={ROUTES.HOME}>
+          <Link to={ROUTES.HOME}>
             Logged in as: {`${!!authUser && authUser.name}`}
           </Link>
         </Li>
@@ -19,7 +22,7 @@ const Navbar = ({ setShowAddTicket, firebase }) => {
           <Control placeholder="search" />
         </Li>
         <Li>
-          <Link href={ROUTES.MANAGE_USERS}>Home</Link>
+          <Link to={ROUTES.MANAGE_USERS}>Home</Link>
         </Li>
         <Li>
           <Button
@@ -31,11 +34,7 @@ const Navbar = ({ setShowAddTicket, firebase }) => {
           </Button>
         </Li>
         <Li>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => firebase.doSignOut()}
-          >
+          <Button variant="danger" size="sm" onClick={() => logout()}>
             Log Out
           </Button>
         </Li>
@@ -67,7 +66,7 @@ const List = styled(ListGroup)`
   flex-direction: row;
 `
 
-const Link = styled(Nav.Link)`
+const Link = styled(UnstyledLink)`
   padding: 0;
   margin: 0;
   text-align: center;

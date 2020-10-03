@@ -1,39 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { withFirebase } from '../Firebase'
+import React, { useEffect, useState, useContext } from 'react'
+import { withFirebase, FirebaseContext } from '../Firebase'
 import AuthUserContext from './context'
 
 const withAuthentication = (Component) => {
   const WithAuthentication = (props) => {
     const [authUser, setAuthUser] = useState(null)
 
-    useEffect(() => {
-      //   Prevents UI flicker by setting from local storage while awaiting ASYNC
-      setAuthUser(JSON.parse(localStorage.getItem('authUser')))
-      props.firebase.onAuthUserListener(
-        (user) => setAuthUser(user),
-        setAuthUser(null),
-      )
-    }, [])
+    // this shouldn't change, therefore it should be a dependency
+    // of the firebase onAuthUserListener effect
+    const firebase = useContext(FirebaseContext)
 
     useEffect(() => {
-      // End session persistence if firebase session is not found
-      if (authUser === null) {
-        localStorage.removeItem('authUser')
-        return
+      const demoIsActive = localStorage.getItem('auth-demoIsActive')
+      if (demoIsActive) {
+        setAuthUser({
+          name: 'DEMO_ADMIN',
+          email: 'DEMO@my-demo-portfolio.web.app',
+          role: 'DEMO',
+        })
+      } else {
+        props.firebase.onAuthUserListener(
+          (user) => {
+            if (user !== authUser) {
+              setAuthUser(user)
+            }
+            setAuthUser(user)
+          },
+          () => {
+            if (authUser !== null) {
+              setAuthUser(null)
+            }
+          },
+        )
       }
+    }, [firebase])
 
-      // Session persistence if firebase session is active
-      const storedAuthUser = localStorage.getItem('authUser')
-      const authUserStringified = JSON.stringify(authUser)
-      if (storedAuthUser !== authUserStringified) {
-        localStorage.setItem('authUser', authUserStringified)
-      }
-    }, [authUser])
-
-    useEffect(() => console.log(authUser), [authUser])
+    useEffect(
+      () => console.log('AUTH USER CHANGING IN WITHAUTHENTICATION: ', authUser),
+      [authUser],
+    )
 
     return (
-      <AuthUserContext.Provider value={authUser}>
+      <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
         <Component {...props} authUser={authUser} />
       </AuthUserContext.Provider>
     )

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { compose } from 'recompose'
-import { withFirebase } from '../Firebase'
+import { withFirebase, FirebaseContext } from '../Firebase'
 import * as ROUTES from '../routes'
 import AuthUserContext from './context'
 
@@ -28,11 +28,7 @@ const withAuthorization = (condition) => (Component) => {
       }
     }, [authUser, condition])
 
-    return condition(authUser) ? (
-      <Component {...props} authUser={authUser} />
-    ) : (
-      <></>
-    )
+    return condition(authUser) ? <Component {...props} /> : <></>
   }
 
   return WithAuthorization

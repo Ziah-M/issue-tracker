@@ -2,27 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { Nav, ListGroup } from 'react-bootstrap'
 import * as ROUTES from '../routes'
+import { Link } from 'react-router-dom'
 
 const Sidebar = () => (
   <Wrapper>
     <List>
       <Li>
-        <Link href={ROUTES.HOME}>Dashboard Home</Link>
+        <Link to={ROUTES.HOME}>Dashboard Home</Link>
       </Li>
       <Li>
-        <Link href={ROUTES.MANAGE_ROLES}>Manage User Roles</Link>
+        <Link to={ROUTES.MANAGE_ROLES}>Manage User Roles</Link>
       </Li>
       <Li>
-        <Link href={ROUTES.MANAGE_USERS}>Manage Project Users</Link>
+        <Link to={ROUTES.MANAGE_USERS}>Manage Project Users</Link>
       </Li>
       <Li>
-        <Link href={ROUTES.MY_PROJECTS}>My Projects</Link>
+        <Link to={ROUTES.MY_PROJECTS}>My Projects</Link>
       </Li>
       <Li>
-        <Link href={ROUTES.MY_TICKETS}>My Tickets</Link>
+        <Link to={ROUTES.MY_TICKETS}>My Tickets</Link>
       </Li>
       <Li>
-        <Link href={ROUTES.USER_PROFILE}>User Profile</Link>
+        <Link to={ROUTES.USER_PROFILE}>User Profile</Link>
       </Li>
     </List>
   </Wrapper>
@@ -46,7 +47,7 @@ const Li = styled(ListGroup.Item)`
 
 const List = styled(ListGroup)``
 
-const Link = styled(Nav.Link)`
+const NavLink = styled(Nav.Link)`
   padding: 0;
   margin: 0;
   text-align: center;

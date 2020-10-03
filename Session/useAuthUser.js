@@ -1,9 +1,10 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AuthUserContext from './context'
 
 const useAuthUser = () => {
-  const authUser = useContext(AuthUserContext)
-  return authUser
+  const { authUser, setAuthUser } = useContext(AuthUserContext)
+
+  return { authUser, setAuthUser }
 }
 
 export default useAuthUser

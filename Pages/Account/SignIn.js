@@ -6,6 +6,8 @@ import { compose } from 'recompose'
 import { SignUpLink } from './SignUpForm'
 import { PasswordForgotLink } from './ForgotPassword'
 import SignOutButton from './SignOut'
+import { Button } from 'react-bootstrap'
+import { useAuthUser } from '../../Session'
 
 const INITIAL_STATE = {
   email: '',
@@ -24,6 +26,16 @@ your personal account page.
   `
 
 const SignInPage = () => {
+  const { authUser, setAuthUser } = useAuthUser()
+  const handleSignInAsDemo = () => {
+    localStorage.setItem('auth-demoIsActive', 'true')
+    setAuthUser({
+      email: 'DEMO@my-portfolio.web.app',
+      name: 'DEMO_ADMIN',
+      role: 'DEMO',
+    })
+  }
+
   return (
     <div>
       <h1>Sign In</h1>
@@ -32,6 +44,9 @@ const SignInPage = () => {
       <PasswordForgotLink />
       <SignUpLink />
       <SignOutButton />
+      <Button variant="success" onClick={handleSignInAsDemo}>
+        SIGN IN AS DEMO
+      </Button>
     </div>
   )
 }
