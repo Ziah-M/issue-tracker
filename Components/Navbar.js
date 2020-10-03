@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { Nav, ListGroup, FormControl as Control, Button } from 'react-bootstrap'
 import * as ROUTES from '../routes'
 import { useAuthUser } from '../Session'
+import { withFirebase } from '../Firebase'
 
-const Navbar = ({ setShowAddTicket }) => {
+const Navbar = ({ setShowAddTicket, firebase }) => {
   const authUser = useAuthUser()
   return (
     <Wrapper>
@@ -30,7 +31,11 @@ const Navbar = ({ setShowAddTicket }) => {
           </Button>
         </Li>
         <Li>
-          <Button variant="danger" size="sm" onClick={() => null}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => firebase.doSignOut()}
+          >
             Log Out
           </Button>
         </Li>
@@ -73,4 +78,4 @@ const Link = styled(Nav.Link)`
   }
 `
 
-export default Navbar
+export default withFirebase(Navbar)
