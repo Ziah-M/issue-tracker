@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AddTicketModal, Navbar, Sidebar } from './Components'
 import { useFirebaseListener } from './Hooks'
-import RouterSwitch from './RouterSwitch'
+import RouterSwitch from './RouterSwitchSignedIn'
 
 const App = () => {
   const [showAddTicket, setShowAddTicket] = useState(false)

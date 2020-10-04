@@ -4,6 +4,7 @@ import App from './App'
 import store from './redux/store'
 import { useAuthUser, withAuthentication } from './Session'
 import { SignIn } from './Pages'
+import RouterSwitchSignedOut from './RouterSwitchSignedOut'
 
 const Index = () => {
   const { authUser } = useAuthUser()
@@ -12,7 +13,7 @@ const Index = () => {
 
   return (
     <Provider store={store}>
-      {!authUser && <SignIn />}
+      {!authUser && <RouterSwitchSignedOut />}
       {authUser && <App />}
     </Provider>
   )
