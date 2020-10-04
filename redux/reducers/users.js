@@ -1,29 +1,27 @@
-import {
-  ADD_TICKET,
-  EDIT_TICKET,
-  OVERWRITE_USERS,
-  TOGGLE_TICKET_ON_PROJECT,
-} from '../actionTypes'
+import { EDIT_USER_ROLE, OVERWRITE_USERS } from '../actionTypes'
 
 import { usersInitialState } from '../initialState'
 
 const INITIAL_STATE = usersInitialState
 
 export default (state = INITIAL_STATE, action) => {
-  const { type, payload } = action
+  const { type, payload, id } = action
 
   switch (type) {
-    case ADD_TICKET: {
-      const { data } = payload
+    case EDIT_USER_ROLE: {
       return {
         ...state,
-        data,
+        [id]: {
+          ...state[id],
+          ...payload,
+        },
       }
     }
 
     case OVERWRITE_USERS: {
-      const { state } = payload
-      return state
+      return {
+        ...payload,
+      }
     }
     default:
       return state

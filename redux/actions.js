@@ -5,7 +5,6 @@ import {
   ADD_TICKET,
   EDIT_TICKET,
   EDIT_USER_ROLE,
-  TOGGLE_USER_ON_PROJECT,
   OVERWRITE_PROJECTS,
   OVERWRITE_USERS,
   OVERWRITE_TICKETS,
@@ -20,7 +19,8 @@ import { getTimestamp, removeFalseyValuesFromObject } from '../Helpers'
 
 export const addTicket = (data) => ({
   type: ADD_TICKET,
-  payload: { ...data, uid: uuid() },
+  payload: { ...data },
+  id: uuid(),
 })
 
 export const editTicket = (id, data) => ({
@@ -60,25 +60,27 @@ export const addTicketComment = (id, data) => ({
 
 //    ----   PROJECTS   ----
 
-const addProject = (data) => ({
+export const addProject = (data) => ({
   type: ADD_PROJECT,
   payload: { ...data },
 })
 
-const editProject = (id, data = {}) => ({
+export const editProject = (id, data = {}) => ({
   type: EDIT_PROJECT,
   payload: { ...data },
   id,
 })
 
-const addProjectUser = (data = {}) => ({
+export const addProjectUser = (projectId, userId, data = {}) => ({
   type: ADD_PROJECT_USER,
-  payload: { ...data, uid: uuid() },
+  id: projectId,
+  projectUserId: userId,
 })
 
-const removeProjectUser = (id) => ({
+export const removeProjectUser = (projectId, userId) => ({
   type: REMOVE_PROJECT_USER,
-  id,
+  id: projectId,
+  projectUserId: userId,
 })
 
 //    ----  USERS   ----
@@ -91,17 +93,17 @@ export const editUserRole = (id, role) => ({
 
 //    ----   FIREBASE LISTENER ACTIONS   ----
 
-export const overwriteProjects = (state) => ({
+export const overwriteProjects = (data) => ({
   type: OVERWRITE_PROJECTS,
-  payload: { state },
+  payload: { ...data },
 })
 
-export const overwriteUsers = (state) => ({
+export const overwriteUsers = (data) => ({
   type: OVERWRITE_USERS,
-  payload: { state },
+  payload: { ...data },
 })
 
-export const overwriteTickets = (state) => ({
+export const overwriteTickets = (data) => ({
   type: OVERWRITE_TICKETS,
-  payload: { state },
+  payload: { ...data },
 })

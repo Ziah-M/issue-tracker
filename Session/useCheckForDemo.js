@@ -3,7 +3,7 @@ import { editUserRole } from '../redux/actions'
 import useAuthUser from './useAuthUser'
 
 const useCheckForDemo = () => {
-  const authUser = useAuthUser()
+  const { authUser } = useAuthUser()
   const [isDemo, setIsDemo] = useState(true)
 
   useEffect(() => {

@@ -1,27 +1,53 @@
 import {
   ADD_TICKET,
+  ADD_TICKET_COMMENT,
   EDIT_TICKET,
   OVERWRITE_TICKETS,
-  TOGGLE_TICKET_ON_PROJECT,
 } from '../actionTypes'
 
-const INITIAL_STATE = {}
+import { ticketsInitialState } from '../initialState'
+import uuid from 'uuid'
+
+const INITIAL_STATE = ticketsInitialState
 
 export default (state = INITIAL_STATE, action) => {
-  const { type, payload } = action
+  const { type, payload = {}, id } = action
 
   switch (type) {
     case ADD_TICKET: {
-      const { data } = payload
       return {
         ...state,
-        data,
+        [id]: { ...payload },
+      }
+    }
+
+    case EDIT_TICKET: {
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          ...payload,
+        },
+      }
+    }
+
+    case ADD_TICKET_COMMENT: {
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          comments: {
+            ...state[id].comments,
+            [uuid()]: { ...payload },
+          },
+        },
       }
     }
 
     case OVERWRITE_TICKETS: {
-      const { state } = payload
-      return state
+      return {
+        ...payload,
+      }
     }
     default:
       return state

@@ -1,11 +1,15 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardTable } from '../../Components'
+import { convertObjectToList } from '../../Helpers'
 import useFirebaseActions from '../../redux/useFirebaseActions'
 
 const UsersTable = ({ users, projectId }) => {
   const dispatch = useDispatch()
+  const personnel = useSelector((state) => state.projects[projectId].personnel)
+  const personnelUserIds = Object.keys(personnel)
+
   const { addProjectUser, removeProjectUser } = useFirebaseActions()
 
   const add = (projectId, userId) => {
@@ -21,11 +25,11 @@ const UsersTable = ({ users, projectId }) => {
     ? users.map((user) => [
         user.name,
         user.role,
-        user.isAssignedToProject ? (
+        personnelUserIds.includes(user.uid) ? (
           <Button
             variant="danger"
             size="sm"
-            onClick={() => add(projectId, user.uid)}
+            onClick={() => remove(projectId, user.uid)}
           >
             Remove
           </Button>
@@ -33,7 +37,7 @@ const UsersTable = ({ users, projectId }) => {
           <Button
             variant="success"
             size="sm"
-            onClick={() => remove(projectId, user.uid)}
+            onClick={() => add(projectId, user.uid)}
           >
             Add
           </Button>

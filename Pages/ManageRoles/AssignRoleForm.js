@@ -12,13 +12,19 @@ import useFirebaseActions from '../../redux/useFirebaseActions'
 import { ROLES } from '../../Data'
 
 const AssignRoleForm = ({ users = [] }) => {
-  const { register, control, handleSubmit, errors } = useForm()
+  const { register, control, handleSubmit, errors } = useForm({
+    defaultValues: {
+      selectedUser: '',
+      selectedRole: '',
+    },
+  })
 
   const dispatch = useDispatch()
   const { editUserRole } = useFirebaseActions()
 
   const onSubmit = (data) => {
     const { selectedUser, selectedRole } = data
+    console.log('About to dispatch manage user roles')
     if (selectedUser && selectedRole) {
       dispatch(editUserRole(selectedUser, selectedRole))
     }
@@ -33,8 +39,7 @@ const AssignRoleForm = ({ users = [] }) => {
               control={control}
               name="selectedUser"
               rules={{
-                required: true,
-                minLength: 4,
+                minLength: 1,
                 maxLength: 50,
               }}
               defaultValue={users[0] && users[0].uid}
@@ -58,7 +63,6 @@ const AssignRoleForm = ({ users = [] }) => {
               control={control}
               name="selectedRole"
               rules={{
-                required: true,
                 minLength: 4,
                 maxLength: 50,
               }}
@@ -81,7 +85,7 @@ const AssignRoleForm = ({ users = [] }) => {
             </Button>
           </Footer>
         </Form>
-      )}{' '}
+      )}
     </Wrapper>
   )
 }

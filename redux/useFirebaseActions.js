@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { uuid } from 'uuid'
 import { useCheckForDemo, useAuthUser } from '../Session'
 import * as actions from './actions'
@@ -8,31 +7,11 @@ import usePush from '../Hooks/CRUD/usePush'
 import useUpdate from '../Hooks/CRUD/useUpdate'
 import { useRemove, useSet } from '../Hooks'
 
-const getTimestamp = () => {
-  // returns a timestamp without seconds
-  const a = new Date()
-  const b = a.toUTCString()
-  const pattern = /:\d\d\sGMT/g
-  const pattern2 = /\w\w\w,\s/g
-  const c = b.replace(pattern, '')
-  const d = c.replace(pattern2, '')
-  return d
-}
-
-const removeFalseyValuesFromObject = (obj) => {
-  const updatedData = {}
-  Object.keys(obj).map((key) => {
-    if (obj[key]) {
-      updatedData[key] = obj[key]
-    }
-  })
-
-  return updatedData
-}
+import { getTimestamp, removeFalseyValuesFromObject } from '../Helpers'
 
 const useFirebaseActions = () => {
   const isDemo = useCheckForDemo()
-  const authUser = useAuthUser()
+  const { authUser } = useAuthUser()
 
   // FIREBASE CRUD HOOKS
   const pushToDb = usePush()
@@ -46,7 +25,7 @@ const useFirebaseActions = () => {
     const ticket = {
       ...data,
       created: getTimestamp(),
-      submitter: authUser.name(),
+      submitter: authUser.name,
     }
 
     if (isDemo) {
@@ -96,6 +75,8 @@ const useFirebaseActions = () => {
       created: getTimestamp(),
     }
 
+    console.log('NEW COMMENT', newComment)
+
     if (isDemo) {
       console.log('DISPATCHING DEMO ADD COMMENT TO TICKET')
       dispatch(actions.addTicketComment(ticketId, newComment))
@@ -124,6 +105,8 @@ const useFirebaseActions = () => {
   }
 
   const addProjectUser = (projectId, userId) => (dispatch) => {
+    console.log('PROJECTID', projectId, 'USERID', userId)
+    
     if (isDemo) {
       console.log('DISPATCHING DEMO ADD PROJECT USER')
       dispatch(actions.addProjectUser(projectId, userId))
@@ -133,6 +116,8 @@ const useFirebaseActions = () => {
   }
 
   const removeProjectUser = (projectId, userId) => (dispatch) => {
+    console.log('PROJECTID', projectId, 'USERID', userId)
+
     if (isDemo) {
       console.log('DISPATCHING DEMO REMOVE PROJECT USER')
       dispatch(actions.removeProjectUser(projectId, userId))
@@ -157,7 +142,7 @@ const useFirebaseActions = () => {
     }
   }
 
-  const actions = {
+  const firebaseActions = {
     addTicket,
     editTicket,
     editProject,
@@ -168,7 +153,7 @@ const useFirebaseActions = () => {
     addTicketComment,
   }
 
-  return actions
+  return firebaseActions
 }
 
 export default useFirebaseActions

@@ -24,4 +24,6 @@ export const removeFalseyValuesFromObject = (obj) => {
       updatedData[key] = obj[key]
     }
   })
+
+  return updatedData
 }
