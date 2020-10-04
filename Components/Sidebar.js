@@ -14,6 +14,9 @@ import {
 
 const Sidebar = () => (
   <Wrapper>
+    Logged in as ...
+    <br/>
+    TODO
     <List>
       <Li>
         <Icon icon={faChartLine} />

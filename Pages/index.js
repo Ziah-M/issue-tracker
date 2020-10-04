@@ -5,7 +5,7 @@ import ManageUsers from './ManageUsers'
 import MyProjects from './MyProjects'
 import MyTickets from './MyTickets'
 import UserProfile from './UserProfile'
-import Home from './Home'
+import Dashboard from './Dashboard'
 import Ticket from './Ticket'
 import Project from './Project'
 
@@ -18,7 +18,7 @@ export {
   MyProjects,
   MyTickets,
   UserProfile,
-  Home,
+  Dashboard,
   Ticket,
   Project,
 }
