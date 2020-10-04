@@ -46,6 +46,7 @@ const SignInForm = () => {
       name: 'DEMO_ADMIN',
       role: 'DEMO',
     })
+    history.push(ROUTES.LANDING)
   }
 
   const handleSignInWithGoogle = () => {

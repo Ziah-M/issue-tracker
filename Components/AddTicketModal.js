@@ -1,17 +1,13 @@
 import React from 'react'
-import {
-  Button as UnstyledButton,
-  Col,
-  Form,
-  Modal,
-  NavLink as Link,
-} from 'react-bootstrap'
+import { Button as UnstyledButton, Col, Form, Modal } from 'react-bootstrap'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useParams } from 'react-router'
 import { convertObjectToList } from '../Helpers'
 import useFirebaseActions from '../redux/useFirebaseActions'
+import { Link } from 'react-router-dom'
+import * as ROUTES from '../routes'
 
 const AddTicketModal = ({
   handleShow,
@@ -324,7 +320,9 @@ const EditForm = ({
         </Col>
 
         <Footer>
-          <Link href="">Back to List</Link>
+          <Link to={ROUTES.MY_TICKETS} onClick={() => handleClose()}>
+            Back to List
+          </Link>
           <Button variant="success" type="submit">
             Submit New
           </Button>

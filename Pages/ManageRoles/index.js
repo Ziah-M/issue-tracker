@@ -5,6 +5,7 @@ import { ContentArea } from '../../Components'
 import { convertObjectToList } from '../../Helpers'
 import AssignRoleForm from './AssignRoleForm'
 import PersonnelOverview from './PersonnelOverview'
+import { Col, Row } from 'react-bootstrap'
 
 const ManageRoles = ({ authUser }) => {
   const users = useSelector((store) => store.users)
@@ -13,18 +14,17 @@ const ManageRoles = ({ authUser }) => {
 
   return (
     <ContentArea>
-      <div style={{ height: 'auto', width: '100%', overflow: 'hidden' }}>
-        {JSON.stringify(authUser)}
-      </div>
-      <h1>Manage User Roles</h1>
-      <div style={{ width: '100%', border: '2px solid red' }}>
-        <ColLeft>
+      <Row className="justify-content-center mb-5">
+        <h1>Manage User Roles</h1>
+      </Row>
+      <Row>
+        <Col xs="4" xl='3'>
           <AssignRoleForm users={usersArray} />
-        </ColLeft>
-        <ColRight>
+        </Col>
+        <Col xs="7">
           <PersonnelOverview users={usersArray} />
-        </ColRight>
-      </div>
+        </Col>
+      </Row>
     </ContentArea>
   )
 }

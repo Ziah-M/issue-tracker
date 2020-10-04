@@ -8,8 +8,8 @@ const Wrapper = styled.div`
   max-width: 100%;
   height: auto;
   min-height: 100vh;
-  background: lightgrey;
   padding: 40px 20px;
+  background: white;
 `
 
 export default ContentArea

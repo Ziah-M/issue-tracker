@@ -13,7 +13,9 @@ const App = () => {
 
   return (
     <Wrapper>
-      <Sidebar />
+      <SidebarSection>
+        <Sidebar />
+      </SidebarSection>
       <Inner>
         <Navbar setShowAddTicket={handleShowAddTicket} />
         <RouterSwitch />
@@ -30,9 +32,14 @@ const App = () => {
 
 const Wrapper = styled.div`
   min-height: 100vh;
+  height: auto;
   width: 100%;
-
+  background: white;
   display: flex;
+`
+
+const SidebarSection = styled.div`
+
 `
 
 const Inner = styled.div`
@@ -40,6 +47,7 @@ const Inner = styled.div`
   width: 100%;
   max-width: 100%;
   flex-direction: column;
+  border-left: 1px solid gainsboro;
 `
 
 export default App

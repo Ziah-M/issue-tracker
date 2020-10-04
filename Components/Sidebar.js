@@ -12,9 +12,11 @@ import {
   faChartLine,
 } from '@fortawesome/free-solid-svg-icons'
 import { useAuthUser } from '../Session'
+import { useLocation } from 'react-router'
 
 const Sidebar = () => {
   const { authUser } = useAuthUser()
+  const { pathname } = useLocation()
   return (
     <Wrapper>
       <Welcome>
@@ -22,24 +24,24 @@ const Sidebar = () => {
         <div>{authUser.name}</div>
       </Welcome>
       <List>
-        <Li>
+        <Li className={pathname === ROUTES.LANDING && 'is-active'}>
           <Icon icon={faChartLine} />
-          <Link to={ROUTES.HOME}>Dashboard</Link>
+          <Link to={ROUTES.LANDING}>Dashboard</Link>
         </Li>
-        <Li>
+        <Li className={pathname === ROUTES.MANAGE_ROLES && 'is-active'}>
           <Icon icon={faUsersCog} />
           <Link to={ROUTES.MANAGE_ROLES}>Manage Roles</Link>
         </Li>
-        <Li>
+        <Li className={pathname === ROUTES.MANAGE_USERS && 'is-active'}>
           <Icon icon={faUsers} />
           <Link to={ROUTES.MANAGE_USERS}>Manage Project Users</Link>
         </Li>
-        <Li>
+        <Li className={pathname === ROUTES.MY_PROJECTS && 'is-active'}>
           <Icon icon={faProjectDiagram} />
 
           <Link to={ROUTES.MY_PROJECTS}>My Projects</Link>
         </Li>
-        <Li>
+        <Li className={pathname === ROUTES.MY_TICKETS && 'is-active'}>
           <Icon icon={faTasks} />
 
           <Link to={ROUTES.MY_TICKETS}>My Tickets</Link>
@@ -94,6 +96,12 @@ const Li = styled(ListGroup.Item)`
   user-select: none;
   &:hover {
     background: #deb150;
+  }
+  &.is-active {
+    background: #deb150;
+    * {
+      color: white;
+    }
   }
 `
 

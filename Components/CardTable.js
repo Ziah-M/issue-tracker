@@ -47,7 +47,9 @@ const CardTable = ({ headings = [], rows = [['No data available']] }) => {
   const resultsPerPage = 10
   const rangeStart = 1 + (page - 1) * resultsPerPage
   const rangeEnd = Math.min(page * resultsPerPage, rows.length)
-  const totalPages = 1 + parseInt((rangeEnd - 1) / 10)
+  const totalPages = 1 + parseInt(rangeEnd / 10)
+
+  console.log(totalPages)
 
   // --- SORTING ---
   const [sortColumnIndex, setSortColumnIndex] = useState(0)
@@ -78,7 +80,7 @@ const CardTable = ({ headings = [], rows = [['No data available']] }) => {
   return (
     <Wrapper>
       <TopSection>
-        Entries &amp;{' '}
+        {/* TODO -> ENTRIES */}&nbsp;
         <SearchInput size="sm">
           <InputGroup.Prepend>
             <InputGroup.Text>Search:</InputGroup.Text>
@@ -95,7 +97,7 @@ const CardTable = ({ headings = [], rows = [['No data available']] }) => {
                 onClick={() => handleChangeSortColumn(index)}
               >
                 <span>
-                  {heading}{' '}
+                  {heading}
                   {!!heading.replace(/\s/g, '').length && (
                     <FontAwesomeIcon
                       style={{
@@ -116,7 +118,7 @@ const CardTable = ({ headings = [], rows = [['No data available']] }) => {
         <Body>
           {sortedRowsWithSearchFilter.map(
             (row = [], indexRow) =>
-              indexRow < rangeEnd && (
+              parseInt(1 + indexRow / 10) === page && (
                 <Tr key={`table-row-${indexRow}`}>
                   {row.map((item = '', indexItem) =>
                     typeof item === 'string' ? (

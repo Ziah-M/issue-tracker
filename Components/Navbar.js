@@ -4,7 +4,7 @@ import { Nav, ListGroup, FormControl as Control, Button } from 'react-bootstrap'
 import * as ROUTES from '../routes'
 import { useAuthUser, useLogout } from '../Session'
 import { withFirebase } from '../Firebase'
-import {Link as UnstyledLink} from 'react-router-dom'
+import { Link as UnstyledLink } from 'react-router-dom'
 
 const Navbar = ({ setShowAddTicket, firebase }) => {
   const { authUser } = useAuthUser()
@@ -14,16 +14,11 @@ const Navbar = ({ setShowAddTicket, firebase }) => {
     <Wrapper>
       <List>
         <Li>
-          <Link to={ROUTES.HOME}>
-            Logged in as: {`${!!authUser && authUser.name}`}
+          <Link to={'/'} style={{ color: '#deb150', fontSize: '18px' }}>
+            <span>BACK TO PORTFOLIO</span>
           </Link>
         </Li>
-        <Li>
-          <Control placeholder="search" />
-        </Li>
-        <Li>
-          <Link to={ROUTES.MANAGE_USERS}>Home</Link>
-        </Li>
+
         <Li>
           <Button
             variant="success"
@@ -32,6 +27,9 @@ const Navbar = ({ setShowAddTicket, firebase }) => {
           >
             Create Ticket
           </Button>
+        </Li>
+        <Li>
+          <Control placeholder="search" />
         </Li>
         <Li>
           <Button variant="danger" size="sm" onClick={() => logout()}>
@@ -48,16 +46,21 @@ const Wrapper = styled.div`
   width: 100%;
   min-width: 100%;
   height: auto;
-  background: blue;
-  background: green;
+  background: white;
 `
 
 const Li = styled(ListGroup.Item)`
   user-select: none;
-  min-width: 100px;
-  display: inline-block;
+  min-width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background: #deb150;
+
+    span {
+      color: white;
+    }
   }
 `
 

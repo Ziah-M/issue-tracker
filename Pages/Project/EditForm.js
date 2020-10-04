@@ -1,13 +1,11 @@
 import React from 'react'
-import {
-  Button as UnstyledButton,
-  Form as UnstyledForm,
-  NavLink as Link,
-} from 'react-bootstrap'
+import { Button as UnstyledButton, Form as UnstyledForm } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import useFirebaseActions from '../../redux/useFirebaseActions'
+import { Link } from 'react-router-dom'
+import * as ROUTES from '../../routes'
 
 const EditForm = ({ project }) => {
   const { register, handleSubmit, errors } = useForm()
@@ -52,11 +50,9 @@ const EditForm = ({ project }) => {
         />
 
         <Footer>
-          <Link href="">Back to List</Link>
-          <Link href="GOTO MANAGE PROJECT USERS">
-            Assign Users To This Project
-          </Link>
-          <Link href="GOTO TICKET TABLE">Add Tickets To This Project</Link>
+          <Link to={ROUTES.MY_TICKETS}>Back to List</Link>
+          <Link to={ROUTES.MANAGE_USERS}>Assign Users To This Project</Link>
+          <Link to={ROUTES.MY_TICKETS}>Add Tickets To This Project</Link>
           <Button variant="primary" type="submit">
             Update
           </Button>

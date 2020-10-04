@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button as UnstyledButton, NavLink as Link } from 'react-bootstrap'
+import { Button as UnstyledButton } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Card, CardTable, ContentArea } from '../../Components'
 import { convertObjectToList } from '../../Helpers'
 import * as ROUTES from '../../routes'
+import { Link } from 'react-router-dom'
 
 const MyProjects = () => {
   const projects = useSelector((store) => store.projects)
@@ -18,8 +19,9 @@ const MyProjects = () => {
       title,
       description,
       <>
-        <Link href={`${ROUTES.LINK_PROJECT(uid)}`}>Manage Users</Link>
-        <Link href={`${ROUTES.LINK_PROJECT(uid)}`}>Details</Link>
+        <Link to={`${ROUTES.LINK_PROJECT(uid)}`}>Manage Users</Link>
+        &nbsp;&nbsp;&nbsp;
+        <Link to={`${ROUTES.LINK_PROJECT(uid)}`}>Details</Link>
       </>,
     ]
   })

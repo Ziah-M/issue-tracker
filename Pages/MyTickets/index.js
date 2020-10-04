@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink as Link } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Card, CardTable, ContentArea } from '../../Components'
@@ -34,8 +34,9 @@ const MyTickets = () => {
       type,
       created,
       <>
-        <Link href={`${ROUTES.LINK_TICKET(uid)}`}>Manage Users</Link>
-        <Link href={`${ROUTES.LINK_TICKET(uid)}`}>Details</Link>
+        <Link to={`${ROUTES.LINK_TICKET(uid)}`}>Edit</Link>
+        <br />
+        <Link to={`${ROUTES.LINK_TICKET(uid)}`}>Details</Link>
       </>,
     ]
   })
