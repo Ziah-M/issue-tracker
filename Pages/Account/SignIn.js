@@ -1,19 +1,16 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { Component, useState } from 'react'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 import * as ROUTES from '../../routes'
-import { withFirebase } from '../../Firebase'
+import { useFirebase, withFirebase } from '../../Firebase'
 import { compose } from 'recompose'
 import { SignUpLink } from './SignUpForm'
 import { PasswordForgotLink } from './ForgotPassword'
 import SignOutButton from './SignOut'
-import { Button } from 'react-bootstrap'
 import { useAuthUser } from '../../Session'
-
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-}
+import { Form, Row, Col, Button } from 'react-bootstrap'
+import styled from 'styled-components'
+import { faBug } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ERROR_CODE_ACCOUNT_EXISTS =
   'auth/account-exists-with-different-credential'
@@ -26,7 +23,22 @@ your personal account page.
   `
 
 const SignInPage = () => {
+  return (
+    <Wrapper>
+      <SignInForm />
+    </Wrapper>
+  )
+}
+
+const SignInForm = () => {
   const { authUser, setAuthUser } = useAuthUser()
+  const firebase = useFirebase()
+  const history = useHistory()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+
   const handleSignInAsDemo = () => {
     localStorage.setItem('auth-demoIsActive', 'true')
     setAuthUser({
@@ -36,129 +48,117 @@ const SignInPage = () => {
     })
   }
 
-  return (
-    <div>
-      <h1>Sign In</h1>
-      <SignInForm />
-      <SignInGoogle />
-      <PasswordForgotLink />
-      <SignUpLink />
-      <SignOutButton />
-      <Button variant="success" onClick={handleSignInAsDemo}>
-        SIGN IN AS DEMO
-      </Button>
-    </div>
-  )
-}
+  const handleSignInWithGoogle = () => {
+    firebase
+      .doSignInWithGoogle()
+      .then((socialAuthUser) => {
+        console.log('RETURNED GOOGLE AUTH USER', socialAuthUser)
+      })
+      .then(() => {
+        setError(null)
+        history.push(ROUTES.LANDING)
+      })
+      .catch((responseError) => {
+        if (responseError.code === ERROR_CODE_ACCOUNT_EXISTS) {
+          responseError.message = ERROR_MSG_ACCOUNT_EXISTS
+        }
 
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { ...INITIAL_STATE }
+        setError(responseError)
+      })
   }
 
-  onSubmit = (event) => {
-    const { email, password } = this.state
-    this.props.firebase // Provided by withFirebase HOC
+  const handleSignInWithEmail = (event) => {
+    firebase
       .doSignInWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        this.setState({ ...INITIAL_STATE })
-        this.props.history.push(ROUTES.LANDING) // Uses withRouter HOC
+      .then((response) => {
+        setPassword('')
+        setEmail('')
+        history.push(ROUTES.LANDING)
       })
-      .catch((error) => this.setState({ error }))
+      .catch((responseError) => setError(responseError))
 
     event.preventDefault()
   }
 
-  onChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value, // Computed property name to make this method reusable for multiple onChange events
-    })
-  }
+  const onChange = (event) => {
+    const { name, value } = event.target
+    if (name === 'emailField') {
+      setEmail(value)
+    }
 
-  render() {
-    const { email, password, error } = this.state
-
-    const isInvalid = password === '' || email === ''
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          placeholder="Email Address"
-        />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          placeholder="Password"
-        />
-        <button type="submit" disabled={isInvalid}>
-          Sign In
-        </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    )
-  }
-}
-
-class SignInGoogleBase extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      error: null,
+    if (name === 'passwordField') {
+      setPassword(value)
     }
   }
 
-  onSubmit = (event) => {
-    this.props.firebase
-      .doSignInWithGoogle()
-      .then((socialAuthUser) => {
-        return this.props.firebase.user(socialAuthUser.user.uid).set({
-          username: socialAuthUser.user.displayName,
-          email: socialAuthUser.user.email,
-          roles: {},
-        })
-      })
-      .then(() => {
-        this.setState({ error: null })
-        this.props.history.push(ROUTES.HOME)
-      })
-      .catch((error) => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          // display customer error message
-          error.message = ERROR_MSG_ACCOUNT_EXISTS
-        }
-
-        this.setState({ error })
-      })
-
-    event.preventDefault()
-  }
-
-  render() {
-    const { error } = this.state
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit"> Sign In with Google</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    )
-  }
+  return (
+    <Form
+      style={{ width: '300px', padding: '40px' }}
+      onSubmit={handleSignInWithEmail}
+    >
+      <FormTitle>
+        <FontAwesomeIcon icon={faBug} />
+        &nbsp;Bug Tracker Login
+      </FormTitle>
+      <Form.Group>
+        <Form.Control
+          type="email"
+          name="emailField"
+          placeholder="email"
+          value={email}
+          onChange={(event) => onChange(event)}
+        ></Form.Control>
+      </Form.Group>
+      <Form.Group>
+        <Form.Control
+          type="password"
+          name="passwordField"
+          placeholder="password"
+          onChange={(event) => onChange(event)}
+          value={password}
+        ></Form.Control>
+      </Form.Group>
+      <Button variant="success" onClick={handleSignInAsDemo} block>
+        SIGN IN AS DEMO ADMIN
+      </Button>
+      <Button block type="submit" variant="primary" disabled>
+        SIGN IN
+      </Button>
+      <Button
+        variant="secondary"
+        block
+        onClick={handleSignInWithGoogle}
+        disabled
+      >
+        Sign In with Google
+      </Button>
+      <Row className="justify-content-center mt-4 mb-1">
+        Forgot your&nbsp;
+        <Link to={false && ROUTES.FORGOT_PASSWORD}>Password?</Link>
+      </Row>
+      <Row className="justify-content-center mb-4">
+        Create an Account?&nbsp;
+        <Link to={false && ROUTES.SIGN_UP}>Sign Up</Link>
+      </Row>
+    </Form>
+  )
 }
 
-// Creating HOC
-const SignInForm = compose(withRouter, withFirebase)(SignInFormBase)
-const SignInGoogle = compose(withRouter, withFirebase)(SignInGoogleBase)
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const FormTitle = styled.div`
+  width: 100%;
+  font-size: 24px;
+  color: gray;
+  text-align: center;
+  margin-bottom: 30px;
+`
 
 export default SignInPage
-export { SignInForm, SignInGoogle }
+export { SignInForm, SignInPage }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 // HOC to inject the firebase singleton from context as a prop
 
@@ -9,5 +9,10 @@ export const withFirebase = (Component) => (props) => (
     {(firebase) => <Component {...props} firebase={firebase} />}
   </FirebaseContext.Consumer>
 )
+
+export const useFirebase = () => {
+  const firebase = useContext(FirebaseContext)
+  return firebase
+}
 
 export default FirebaseContext
