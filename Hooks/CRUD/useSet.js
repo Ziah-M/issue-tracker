@@ -17,7 +17,6 @@ const useSet = () => {
 
   useEffect(() => {
     const { path } = addDetails
-    console.log('PATH  ', path)
 
     if (path) {
       firebase

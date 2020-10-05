@@ -11,8 +11,6 @@ const MyTickets = () => {
 
   const ticketsArray = convertObjectToList(tickets)
 
-  console.log(ticketsArray)
-
   const sortedTickets = ticketsArray.map((ticket) => {
     const {
       title,

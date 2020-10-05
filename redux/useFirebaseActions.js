@@ -1,13 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
-import { uuid } from 'uuid'
-import { useCheckForDemo, useAuthUser } from '../Session'
-import * as actions from './actions'
-import * as actionTypes from './actionTypes'
+import { getTimestamp, removeFalseyValuesFromObject } from '../Helpers'
+import { useRemove, useSet } from '../Hooks'
 import usePush from '../Hooks/CRUD/usePush'
 import useUpdate from '../Hooks/CRUD/useUpdate'
-import { useRemove, useSet } from '../Hooks'
-
-import { getTimestamp, removeFalseyValuesFromObject } from '../Helpers'
+import { useAuthUser, useCheckForDemo } from '../Session'
+import * as actions from './actions'
 
 const useFirebaseActions = () => {
   const isDemo = useCheckForDemo()
@@ -29,7 +25,6 @@ const useFirebaseActions = () => {
     }
 
     if (isDemo) {
-      console.log('DISPATCHING DEMO ADD TICKET')
       dispatch(actions.addTicket(ticket))
     } else {
       pushToDb('tickets', ticket)
@@ -48,7 +43,6 @@ const useFirebaseActions = () => {
     const oldProperties = getState().tickets[id]
 
     if (isDemo) {
-      console.log('DISPATCHING DEMO EDIT TICKET')
       dispatch(actions.editTicket(id, ticket))
     } else {
       updateDb(`tickets/${id}`, ticket)
@@ -75,10 +69,7 @@ const useFirebaseActions = () => {
       created: getTimestamp(),
     }
 
-    console.log('NEW COMMENT', newComment)
-
     if (isDemo) {
-      console.log('DISPATCHING DEMO ADD COMMENT TO TICKET')
       dispatch(actions.addTicketComment(ticketId, newComment))
     } else {
       pushToDb(`tickets/${ticketId}/comments`, newComment)
@@ -88,7 +79,6 @@ const useFirebaseActions = () => {
   // ----            PROJECTS            ----
   const addProject = (details) => (dispatch) => {
     if (isDemo) {
-      console.log('DISPATCHING DEMO ADD PROJECT')
       dispatch(actions.addProject(details))
     } else {
       pushToDb('projects', details)
@@ -97,7 +87,6 @@ const useFirebaseActions = () => {
 
   const editProject = (id, details) => (dispatch) => {
     if (isDemo) {
-      console.log('DISPATCHING DEMO EDIT PROJECT')
       dispatch(actions.editProject(id, details))
     } else {
       updateDb(`projects/${id}`, details)
@@ -105,10 +94,7 @@ const useFirebaseActions = () => {
   }
 
   const addProjectUser = (projectId, userId) => (dispatch) => {
-    console.log('PROJECTID', projectId, 'USERID', userId)
-    
     if (isDemo) {
-      console.log('DISPATCHING DEMO ADD PROJECT USER')
       dispatch(actions.addProjectUser(projectId, userId))
     } else {
       setInDb(`projects/${projectId}/personnel/${userId}`)
@@ -116,10 +102,7 @@ const useFirebaseActions = () => {
   }
 
   const removeProjectUser = (projectId, userId) => (dispatch) => {
-    console.log('PROJECTID', projectId, 'USERID', userId)
-
     if (isDemo) {
-      console.log('DISPATCHING DEMO REMOVE PROJECT USER')
       dispatch(actions.removeProjectUser(projectId, userId))
     } else {
       const path = `projects/${projectId}/personnel/${userId}`
@@ -130,9 +113,7 @@ const useFirebaseActions = () => {
   // ----            USERS            ----
 
   const editUserRole = (userId, role) => (dispatch) => {
-    console.log('EDIT ROLE:', userId, role)
     if (isDemo) {
-      console.log('DISPATCHING DEMO EDIT USER ROLE')
       const appendDemo = role.includes('DEMO') ? role : `DEMO_${role}`
 
       dispatch(actions.editUserRole(userId, appendDemo))

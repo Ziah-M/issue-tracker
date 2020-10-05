@@ -49,8 +49,6 @@ const CardTable = ({ headings = [], rows = [['No data available']] }) => {
   const rangeEnd = Math.min(page * resultsPerPage, rows.length)
   const totalPages = 1 + parseInt(rangeEnd / 10)
 
-  console.log(totalPages)
-
   // --- SORTING ---
   const [sortColumnIndex, setSortColumnIndex] = useState(0)
   const [isReversed, setIsReversed] = useState(false)

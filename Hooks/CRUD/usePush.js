@@ -6,7 +6,6 @@ const usePush = () => {
   const firebase = useContext(FirebaseContext)
 
   const add = (path = '', newData = {}) => {
-    console.log('ABOUT TO TRIGGER FIREBASE PUSH', newData)
     if (!!path && !!newData) {
       setAddDetails({
         path,
@@ -19,7 +18,6 @@ const usePush = () => {
 
   useEffect(() => {
     const { path, data } = addDetails
-    console.log('PATH  ', path, 'DATA  ', data)
 
     if (!!path && !!data) {
       firebase.ref(path).push(addDetails.data)

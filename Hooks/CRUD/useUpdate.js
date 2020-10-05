@@ -18,7 +18,6 @@ const useUpdate = () => {
 
   useEffect(() => {
     const { path, data } = updateDetails
-    console.log('UPDATING FIREBASE AT:', 'PATH  ', path, 'DATA  ', data)
 
     if (!!path && !!data) {
       firebase.ref(path).update(updateDetails.data)

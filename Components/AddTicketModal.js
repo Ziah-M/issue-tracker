@@ -82,7 +82,6 @@ const EditForm = ({
   const usersArray = convertObjectToList(users)
 
   const onSubmit = (data) => {
-    console.log('SUBMITTING FORM NOW')
     if (!isEdit) {
       dispatch(addTicket(data))
     } else {

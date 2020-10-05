@@ -35,11 +35,6 @@ const withAuthentication = (Component) => {
       }
     }, [firebase])
 
-    useEffect(
-      () => console.log('AUTH USER CHANGING IN WITHAUTHENTICATION: ', authUser),
-      [authUser],
-    )
-
     return (
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
         <Component {...props} authUser={authUser} />

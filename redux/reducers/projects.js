@@ -51,7 +51,6 @@ export default (state = INITIAL_STATE, action) => {
 
     case REMOVE_PROJECT_USER: {
       const { [projectUserId]: removed, ...rest } = state[id].personnel
-      console.log('REMOVED', removed, 'REST', rest)
       return {
         ...state,
         [id]: {

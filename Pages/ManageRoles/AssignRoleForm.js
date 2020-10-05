@@ -24,7 +24,6 @@ const AssignRoleForm = ({ users = [] }) => {
 
   const onSubmit = (data) => {
     const { selectedUser, selectedRole } = data
-    console.log('About to dispatch manage user roles')
     if (selectedUser && selectedRole) {
       dispatch(editUserRole(selectedUser, selectedRole))
     }

@@ -50,8 +50,6 @@ const Project = () => {
   //     assignedUsers = project.personnel.map((id) => users[id]);
   //   }
 
-  console.log(project)
-
   return (
     <ContentArea>
       {project && (

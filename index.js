@@ -9,8 +9,6 @@ import { useAuthUser, withAuthentication } from './Session'
 const Index = () => {
   const { authUser } = useAuthUser()
 
-  console.log('AUTH USER IN INDEX: ', authUser)
-
   return (
     <Wrapper>
       <Provider store={store}>

@@ -1,16 +1,12 @@
-import React, { Component, useState } from 'react'
-import { withRouter, Link, useHistory } from 'react-router-dom'
-import * as ROUTES from '../../routes'
-import { useFirebase, withFirebase } from '../../Firebase'
-import { compose } from 'recompose'
-import { SignUpLink } from './SignUpForm'
-import { PasswordForgotLink } from './ForgotPassword'
-import SignOutButton from './SignOut'
-import { useAuthUser } from '../../Session'
-import { Form, Row, Col, Button } from 'react-bootstrap'
-import styled from 'styled-components'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react'
+import { Button, Form, Row } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
+import styled from 'styled-components'
+import { useFirebase } from '../../Firebase'
+import * as ROUTES from '../../routes'
+import { useAuthUser } from '../../Session'
 
 const ERROR_CODE_ACCOUNT_EXISTS =
   'auth/account-exists-with-different-credential'
@@ -52,9 +48,7 @@ const SignInForm = () => {
   const handleSignInWithGoogle = () => {
     firebase
       .doSignInWithGoogle()
-      .then((socialAuthUser) => {
-        console.log('RETURNED GOOGLE AUTH USER', socialAuthUser)
-      })
+      .then((socialAuthUser) => {})
       .then(() => {
         setError(null)
         history.push(ROUTES.LANDING)
