@@ -1,20 +1,21 @@
 import React from 'react'
+import { Button, FormControl as Control, ListGroup } from 'react-bootstrap'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
-import { Nav, ListGroup, FormControl as Control, Button } from 'react-bootstrap'
-import * as ROUTES from '../routes'
-import { useAuthUser, useLogout } from '../Session'
 import { withFirebase } from '../Firebase'
-import { Link as UnstyledLink } from 'react-router-dom'
+import { useAuthUser, useLogout } from '../Session'
 
 const Navbar = ({ setShowAddTicket, firebase }) => {
   const { authUser } = useAuthUser()
   const logout = useLogout()
 
+  const history = useHistory()
+
   return (
     <Wrapper>
       <List>
-        <Li>
-          <Link to={'/'} style={{ color: '#deb150', fontSize: '18px' }}>
+        <Li onClick={() => history.push('/')}>
+          <Link style={{ color: '#deb150', fontSize: '18px' }}>
             <span>BACK TO PORTFOLIO</span>
           </Link>
         </Li>
@@ -69,7 +70,7 @@ const List = styled(ListGroup)`
   flex-direction: row;
 `
 
-const Link = styled(UnstyledLink)`
+const Link = styled.div`
   padding: 0;
   margin: 0;
   text-align: center;
