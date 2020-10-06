@@ -43,7 +43,7 @@ const useFirebaseActions = () => {
     const oldProperties = getState().tickets[id]
 
     if (isDemo) {
-      dispatch(actions.editTicket(id, ticket))
+      dispatch(actions.editTicketWithHistory(id, ticket))
     } else {
       updateDb(`tickets/${id}`, ticket)
 

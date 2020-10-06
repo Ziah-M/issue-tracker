@@ -30,8 +30,8 @@ export const editTicket = (id, data) => ({
 })
 
 export const editTicketWithHistory = (id, data) => (dispatch, getState) => {
-  const { oldHistory } = getState().tickets[id].history || {}
-  const { oldProperties } = getState().ticketsp[id] || {}
+  const oldHistory = getState().tickets[id].history || {}
+  const oldProperties = getState().tickets[id] || {}
 
   const newHistory = {}
   Object.keys(data).map((key) => {
@@ -47,7 +47,8 @@ export const editTicketWithHistory = (id, data) => (dispatch, getState) => {
 
   const history = { ...oldHistory, ...newHistory }
 
-  const ticket = { ...data, ...history }
+  const ticket = { ...data, history: { ...history } }
+  console.log(ticket)
 
   dispatch(editTicket(id, ticket))
 }
