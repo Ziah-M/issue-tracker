@@ -1,22 +1,23 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Nav, ListGroup } from 'react-bootstrap'
-import * as ROUTES from '../routes'
-import { Link as UnstyledLink } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faUsers,
-  faUsersCog,
+  faChartLine,
   faProjectDiagram,
   faTasks,
-  faChartLine,
+  faUsers,
+  faUsersCog,
 } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import { ListGroup, Nav } from 'react-bootstrap'
+import { useHistory, useLocation } from 'react-router'
+import styled from 'styled-components'
+import * as ROUTES from '../routes'
 import { useAuthUser } from '../Session'
-import { useLocation } from 'react-router'
 
 const Sidebar = () => {
   const { authUser } = useAuthUser()
   const { pathname } = useLocation()
+  const history = useHistory()
+
   return (
     <Wrapper>
       <Welcome>
@@ -24,39 +25,53 @@ const Sidebar = () => {
         <div>{authUser.name}</div>
       </Welcome>
       <List>
-        <Li className={pathname === ROUTES.LANDING && 'is-active'}>
+        <Li
+          className={pathname === ROUTES.LANDING && 'is-active'}
+          onClick={() => history.push(ROUTES.LANDING)}
+        >
           <Icon icon={faChartLine} />
-          <Link to={ROUTES.LANDING}>Dashboard</Link>
+          <Link>Dashboard</Link>
         </Li>
-        <Li className={pathname === ROUTES.MANAGE_ROLES && 'is-active'}>
+        <Li
+          className={pathname === ROUTES.MANAGE_ROLES && 'is-active'}
+          onClick={() => history.push(ROUTES.MANAGE_ROLES)}
+        >
           <Icon icon={faUsersCog} />
-          <Link to={ROUTES.MANAGE_ROLES}>Manage Roles</Link>
+          <Link>Manage Roles</Link>
         </Li>
-        <Li className={pathname === ROUTES.MANAGE_USERS && 'is-active'}>
+        <Li
+          className={pathname === ROUTES.MANAGE_USERS && 'is-active'}
+          onClick={() => history.push(ROUTES.MANAGE_USERS)}
+        >
           <Icon icon={faUsers} />
-          <Link to={ROUTES.MANAGE_USERS}>Manage Project Users</Link>
+          <Link>Manage Project Users</Link>
         </Li>
-        <Li className={pathname === ROUTES.MY_PROJECTS && 'is-active'}>
+        <Li
+          className={pathname === ROUTES.MY_PROJECTS && 'is-active'}
+          onClick={() => history.push(ROUTES.MY_PROJECTS)}
+        >
           <Icon icon={faProjectDiagram} />
-
-          <Link to={ROUTES.MY_PROJECTS}>My Projects</Link>
+          <Link>My Projects</Link>
         </Li>
-        <Li className={pathname === ROUTES.MY_TICKETS && 'is-active'}>
+        <Li
+          className={pathname === ROUTES.MY_TICKETS && 'is-active'}
+          onClick={() => history.push(ROUTES.MY_TICKETS)}
+        >
           <Icon icon={faTasks} />
-
-          <Link to={ROUTES.MY_TICKETS}>My Tickets</Link>
+          <Link>My Tickets</Link>
         </Li>
         {/* <Li>
-        <Link to={ROUTES.USER_PROFILE}>User Profile</Link>
+        <Link onClick={() => history.push(ROUTES.USER_PROFILE}>User Profile</Link>
       </Li> */}
       </List>
     </Wrapper>
   )
 }
 
-const Link = styled(UnstyledLink)`
+const Link = styled.div`
   color: gray;
   font-size: 12px;
+  display: inline-block;
 `
 
 const Welcome = styled.div`
