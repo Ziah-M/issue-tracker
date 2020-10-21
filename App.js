@@ -12,42 +12,41 @@ const App = () => {
   useFirebaseListener()
 
   return (
-    <Wrapper>
-      <SidebarSection>
+    <Grid>
+      <GridItem area="sidebar">
         <Sidebar />
-      </SidebarSection>
-      <Inner>
+      </GridItem>
+      <GridItem area="navbar">
         <Navbar setShowAddTicket={handleShowAddTicket} />
+      </GridItem>
+      <GridItem area="inner" style={{ borderLeft: '1px solid gainsboro;' }}>
         <RouterSwitch />
-      </Inner>
+      </GridItem>
       <AddTicketModal
         show={showAddTicket}
         handleShow={handleShowAddTicket}
         handleClose={handleCloseAddTicket}
         isEdit={false}
       />
-    </Wrapper>
+    </Grid>
   )
 }
 
-const Wrapper = styled.div`
+const Grid = styled.div`
+  width: 100%;
   min-height: 100vh;
-  height: auto;
-  width: 100%;
+
   background: white;
-  display: flex;
+
+  display: grid;
+  grid-template:
+    'sidebar navbar' min-content
+    'sidebar inner' 1fr
+    / min-content 1fr;
 `
 
-const SidebarSection = styled.div`
-
-`
-
-const Inner = styled.div`
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  flex-direction: column;
-  border-left: 1px solid gainsboro;
+const GridItem = styled.div`
+  grid-area: ${(props) => props.area};
 `
 
 export default App
